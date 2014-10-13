@@ -1,0 +1,94 @@
+
+## import methods
+importClassesFrom("graph", "graphNEL")
+importClassesFrom("hypergraph", "Hypergraph", "Hyperedge", "DirectedHyperedge")
+importMethodsFrom("methods", "show")
+importMethodsFrom("Biobase", "abstract")
+
+importFrom("graph", "numNodes", "numEdges","nodes","edges")
+importFrom("hypergraph", "head", "tail")
+
+## export classes
+exportClasses(psimi25InteractionEntry,
+              psimi25ComplexEntry,
+              psimi25Interactor,
+              psimi25Interaction,
+              psimi25Complex,
+              psimi25Experiment,
+              psimi25Graph,
+              psimi25Hypergraph,
+              psimi25Source)
+
+exportMethods("sourceDb",
+              "sourceDb<-",
+              "sourceId",
+              "sourceId<-")
+
+exportMethods("taxId",
+              "taxId<-",
+              "organismName",
+              "organismName<-")
+
+exportMethods("interactors",
+              "interactions",
+              "numInteractors",
+              "numInteractions")
+
+exportMethods("releaseDate")
+
+exportMethods("abstract",
+              "availableXrefs",
+              "edgeLabel",
+              "hyperedgeNodes",
+              "show",
+              "initialize",
+              "translateID",
+              "interactorInfo",
+              "interactionType",
+              "complexes",
+              "uniprot",
+              "revInciMat"
+              )
+
+export(parsePsimi25Interaction,
+       parsePsimi25Complex,
+       psimi25XML2Graph,
+       list2Matrix,
+       complexEntry2graph,
+       buildPCHypergraph,
+       separateXMLDataByExpt,
+       HPRD.PSIMI25,
+       BIOGRID.PSIMI25,
+       MINT.PSIMI25,
+       INTACT.PSIMI25,
+       DIP.PSIMI25,
+       MIPS.PSIMI25,
+       MATRIXDB.PSIMI25,
+       CORUM.PSIMI25,
+       MPACT.PSIMI25,
+       iListHandler,
+       eListHandler,
+       graphConverter,
+       hyperGraphConverter,
+       psimi25Hypergraph2GraphNEL,
+       ## interaction accessors,
+       bait,
+       prey,
+       participant,
+       confidenceValue,
+       inhibitor,
+       neutralComponent,
+       pubmedID,
+       null2na, 
+       getAbstractByPMID,
+       xref
+       )
+
+## complex 
+export(complexName,
+       attributesList,
+       members)
+
+       
+## validate
+export(validatePSIMI25)

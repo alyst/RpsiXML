@@ -1,0 +1,153 @@
+Release 1.7.0 (not released yet)
+Internal Changes:
+  + (r42536) parseXmlInteractorNodes uses 'parseXmlInteractorNode instead of indirect calling parseInteractor now
+  + (r42537) refactor the parsing of interactors in parseComplex function. Till now only the parseComplex remains to be refactored
+  + (r42538) add 'parseReleaseDate' function to avoid repeating codes in parsing interaction and complexes
+  + (r42539) add 'parseXmlEntryInteractors' to allow one-call to parse interactors in one entry
+Public Changes:
+  + (r42541) remove function slots in psimi25source objects; rename 'complexMembers' to 'members' directly
+  + (r42543) 'interactorRef' slot is added to 'psimi25Complex' object
+  + (r42547) simi25Complex contains the virtual class attributesListBase now. 'comlexAttributes' function has been removed, instead user should use 'attributesList'
+  + (r42589) 'psimi25Names' is not an abstract class any more
+  + (r43055) 'translateID' fixes a bug and returns the real translted ID. TODO: if more than one translated IDs are returned, the original node (and its connections) should be duplicated.
+  + (r43055) 'translateID' fixes: if a node is failed to be translated (NA), the default identifier (uniprotID) will be used.
+  + 'translateID' fixes: if more than one nodes are translated into same identifier, only the first is left
+
+Release 1.5.31 (Oct. 19, 2009)
+Documentation:
+  + (r42468) Modify the man page of psimi25InteractionEntry to reflect the current data structure of interactors. Thanks the report by Robert Gentleman.
+API Changes:
+  + (r42469) Add 'pubmedID' method for psimi25InteractionEntry object to return unique PubMed IDs of the papers reporting the interactions stored in the entry.
+
+Release 1.5.30
+  + A major refactoring of parsing functions
+
+Release 1.5.27 (Oct. 13, 2009)
+Internal Changes:
+  + (r42344) 'parseXmlExperimentNodeSet' has been refactored, add 'getExperimentNodeSetPath' function
+  + (r42344) 'parseXmlComplex' and 'parseXmlInteractor' renamed into 'parseXmlComplexNode' and 'parseXmlInteractorNode' respectively
+
+Release 1.5.30 (Oct. 13, 2009)
+Internal Changes:
+  + (r42347) A major refactoring splitting the parseXmlInteractionNode, parseXmlEntryNode, etc. 
+Test suite
+  + Remove 'class_test.R', will be replaced by RUnit
+
+Release 1.5.26 (Oct. 12, 2009)
+Internal Changes:
+  + (r42316) 'getMapped' is renamed as 'getValueByMatchingMatrixColumn' and moved out of the main function of 'parsePsimi25Interaction'
+API Changes:
+  + (r42347) 'interactions<-' and 'releaseDate<-' are exported
+
+Release 1.5.25 (Oct. 08, 2009)
+API Changes:
+  + (r42265) The issue of conflicts between utils::head(tail) and hypergraph::head(tail) is solve by setting the method for ANY to the form in utils. However this solution is not perfect, since the conflict warning still appears.
+
+Release 1.5.24 (Oct. 07, 2009)
+API Changes:
+  + The 'import' field is cleaned, only necessary methods are imported.
+  + (r42214): 'sourceId' and 'sourceDb' are added to support any subclass inheriting 'sourceDbAndId'
+  + (r42215): 'taxId' and 'organismName' are refactored to support any subclass inheriting 'organismTaxIdAndName'
+  + (r42220): 'interactorListBase' abstract class is added as superclass for both psimi25Entry and psimi25GraphBase
+  + (r42222): 'psimi25Experiment' now also inherits the 'sourceDbAndId' class. 'expSourceId' is treated as 'sourceId'
+  + (r42223): Functions starting with '.' in their names were meant to be internal for XML parsing. Since they are confusing, these functions have been renamed as 'parseXML...'
+  + (r42227): (nonNull)XMLvalueByPath and (nonNull)XMLattributeValueByPath refactored, reducing redundancy in the parsing codes
+  + (r42230): bug fixed: 'shortLabel' is converted to 'NA' in case of 'NULL'
+
+Release 1.5.23 (Oct. 07, 2009)
+Internal Changes:
+  + Add 'organismIdAndName', 'psimi25Entry' (abstract) and 'psimi25GraphBase' (abstact) classes to reduce redundancy in class definitions
+
+Release 1.5.22 (Oct. 07, 2009)
+Internal Changes:
+  + Add 'sourceDbAndId' private class recoding pairs source database and ID
+  + All new XML interfacing classes and methods have been temporally commented out. Their neccessity needs to be discussed
+Package Structure Changes:
+  + Remove the 'ChangeLog', subversion control log and NEWS take the reporting task.
+
+Release 1.5.21 (Oct. 01, 2009)
+API Changes:
+  + Add 'psimi25Hypergraph2GraphNEL' function to convert a hypergraph to graphNEL object
+
+Release 1.5.20 (Aug. 24, 2009)
+Internal Changes:
+  + All superfluos list-objects are removed to accelerate the parsing, which reduces the time by 25%.
+
+Release 1.5.19 (Aug. 21, 2009)
+API Changes:
+  + 'typedList' is completely substituted by the 'list' data type, which reduces the parsing time by 33%.
+
+Release 1.5.18 (Aug. 13, 2009)
+Internal Changes:
+  + ConfidenceType handler added. Profiling in progress
+
+Release 1.5.17 (Aug. 13, 2009)
+Internal Changes:
+  + All elements of the PSI-MI 2.5 specifications have handlers, although some of them are not tested since
+    no file has implemented them (in this situation these handlers will stop the program)
+
+Release 1.5.16 (Aug. 12, 2009)
+Internal Changes:
+  + Filling most of the element handlers. Still some are missing. This will be finished in the next release.
+
+Release 1.5.15 (Aug. 11, 2009)
+API Changes:
+  + Except for 'interactionList', all the other child elements of 'entry' have their handlers
+
+Release 1.5.14 (Aug. 11, 2009)
+API Changes:
+  + 'psimi25ExperimentTypeHandler' almost fully implemented
+  + 'psimi25EntrySet' and 'psimi25Entry' definition revised to reflect the data structure
+  + source, availabilityList and experimentList elements of the entry can already be unmarshalled
+  + global constant variables added to save memory and speed overhead in parsing. They follow the 
+    naming convention of 'GC_mockClassName'. They will probably not be exported.
+File Changes:
+  + SAXhandler_test.R is removed temporarily from the test file sets, since it
+    is mainly used internally.
+
+
+Release 1.5.13 (Aug. 10, 2009)
+API Changes:
+  + DOM handlers added for several types, but not finished yet
+  + Further modification of classes for easy use (no public API is affected)
+  + Constructor of 'psimi25ExperimentType' added
+File Changes:
+  + 'null2na' function moved to 'SAXhandlers.R' file
+
+Release 1.5.12
+API Changes:
+  + Constructors and accessors are added for most of the XML elements.
+
+Release 1.5.11
+API Changes:
+  + 'psimi25Attribute' class is redefined to reflect the originial structure defined in the specification
+  + constructors added for: 'typedList', 'psimi25NamesType', 'psimi25Attribute', 'psimi25AttributeListType',
+    'psimi25DbReferenceType', 'psimi25XrefType' and 'psimi25AvailabilityType'
+  + internal accessors added to organize the access of data slots, like 'name', 'nameAc', 'iValue' and 'id'
+Documentation Changes:
+  + Add 'psimi25Attribute-class.Rd' to accomodate the helps added recently. This is temporary.
+
+Release 1.5.10
+API Changes:
+  + 'typedList' class and constructor method is exported, with documentation
+File Changes:
+  + 'handlers.R' is renamed as 'SAXhandler.R' to make the group clearer.
+  + 'funcsAnnotation.R' is added to accomodate annotation functions
+  + 'units' directory is added under 'tests' to accomodate RUnit scripts (not implemented yet)
+
+Release 1.5.9
+API Changes:
+  + 'importClassesFrom' and 'importMethodsFrom' directives replace single 'import' in NAMESPACE for Biobase. Other imports will be fixed soon.
+File Changes:
+  + 'genericFunc.R' are renamed into 'AllGenerics.R' according to the convention
+  + Add 'Makefile' to simplify check/install/distribution
+Bug fix:
+  + 'psimi25InferredInteractionAtomParticipantAtom' fixes wrong-spellt class name
+
+Release 1.5.8
+API Changes:
+  + Classes supporting ALL features of PSI-MI 2.5 have been implemented, making preparation for a major update
+File Changes:
+  + 'classDefs.R' are renamed into 'AllClasses.R' according to the convention
+Known Issues:
+  + There warnings by checking, will be changed soon.
