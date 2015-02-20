@@ -691,8 +691,9 @@ parsePsimi25Complex <- function(psimi25file, psimi25source, verbose=FALSE) {
                                           psimi25source=psimi25source,
                                           namespaces=namespaces,
                                           verbose=verbose)
-  
-  
+  interactors <- interactors[ !duplicated(sapply(interactors, sourceId)) ] # remove the duplicates
+
+
   ## complex
   complexNodes <- getNodeSet(psiDoc, "//ns:interactionList/ns:interaction", namespaces)
   if (verbose)
