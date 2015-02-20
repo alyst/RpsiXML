@@ -423,15 +423,15 @@ parseXmlComplexNode <- function(node,
                                                    path=paste("/ns:interaction/ns:xref/ns:primaryRef[@db='",sourcedb,"']",sep=""),
                                                    name="id",
                                                    namespaces=namespaces))
-  
+
   shortLabel <- as.character(XMLvalueByPath(doc=subDoc,
                                             path="/ns:interaction/ns:names/ns:shortLabel",
                                             namespaces=namespaces))
-  
+
   fullName <- as.character(XMLvalueByPath(doc=subDoc,
                                           path="/ns:interaction/ns:names/ns:fullName",
                                           namespaces=namespaces))
-  
+
   interactorRef <- as.character(XMLvalueByPath(doc=subDoc,
                                                path="/ns:interaction/ns:participantList/ns:participant/ns:interactorRef",
                                                namespaces=namespaces))
@@ -439,7 +439,7 @@ parseXmlComplexNode <- function(node,
   attributesList <- parseXmlAttributesListByPath(doc=subDoc,
                                                  path="/ns:interaction/ns:attributeList/ns:attribute[@name]",
                                                  namespaces=namespaces)
-  
+
   free(subDoc)
   complex <- new("psimi25Complex",
                  sourceDb=sourcedb,
@@ -449,7 +449,6 @@ parseXmlComplexNode <- function(node,
                  interactorRef=interactorRef,
                  attributesList=attributesList)
   return(complex)
-  
 
 }
 
