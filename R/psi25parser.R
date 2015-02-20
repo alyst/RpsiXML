@@ -269,6 +269,10 @@ getInteractionPubmedPath <- function(sourceDb) {
   return(path)
 }
 
+isEmptyNodeSet <- function(nodeset) {
+  return(length(nodeset) == 1 && is.na(nodeset))
+}
+
 parseXmlInteractionNode <- function(node,
                                     psimi25source,
                                     expEnv,
@@ -316,7 +320,7 @@ parseXmlInteractionNode <- function(node,
   ## participant
   rolePath <- "/ns:interaction/ns:participantList/ns:participant/ns:interactorRef"
   participantRefs <- nonNullXMLvalueByPath(doc=subDoc, path=rolePath, namespaces=namespaces)
-  if(length(participantRefs) == 1 && is.na(participantRefs)) {
+  if(isEmptyNodeSet(participantRefs)) {
     rolePath <- "/ns:interaction/ns:participantList/ns:participant/ns:interactor"
     participantRefs <- nonNullXMLattributeValueByPath(doc=subDoc,
                                                       path=rolePath,
@@ -326,7 +330,7 @@ parseXmlInteractionNode <- function(node,
   ## bait
   rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='bait']/ns:interactorRef"
   baitRefs <- nonNullXMLvalueByPath(doc=subDoc, path = rolePath, namespaces=namespaces)
-  if(length(baitRefs)==1 && is.na(baitRefs)) {
+  if(isEmptyNodeSet(baitRefs)) {
     rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='bait']/ns:interactor"
     baitRefs <- nonNullXMLattributeValueByPath(doc=subDoc,
                                                path=rolePath,
@@ -336,7 +340,7 @@ parseXmlInteractionNode <- function(node,
   ##prey
   rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='prey']/ns:interactorRef"
   preyRefs <- nonNullXMLvalueByPath(doc=subDoc, path = rolePath, namespaces=namespaces)
-  if(length(preyRefs) == 1 && is.na(preyRefs)) {
+  if(isEmptyNodeSet(preyRefs)) {
     rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='prey']/ns:interactor"
     preyRefs <- nonNullXMLattributeValueByPath(doc=subDoc,
                                                path=rolePath,
