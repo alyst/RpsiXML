@@ -662,7 +662,7 @@ parseXmlEntryNodeSet <- function(psimi25file, psimi25source, verbose=TRUE) {
 
 ## File parser: parsing file into interaction entries
 parsePsimi25Interaction <- function (psimi25file, psimi25source, verbose=TRUE) {
-  parsedEntry <- parseXmlEntryNodeSet(psimi25file, psimi25source, verbose=TRUE)
+  parsedEntry <- parseXmlEntryNodeSet(psimi25file, psimi25source, verbose=verbose)
   return(parsedEntry)
 }
 
