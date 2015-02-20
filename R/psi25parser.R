@@ -419,22 +419,22 @@ parseXmlComplexNode <- function(node,
 
   subDoc <- xmlDoc(node)
   sourcedb <- sourceDb(psimi25source)
-  sourceId <- as.character(XMLattributeValueByPath(doc=subDoc,
-                                                   path=paste("/ns:interaction/ns:xref/ns:primaryRef[@db='",sourcedb,"']",sep=""),
-                                                   name="id",
-                                                   namespaces=namespaces))
+  sourceId <- nonNullXMLattributeValueByPath(doc=subDoc,
+                                             path=paste("/ns:interaction/ns:xref/ns:primaryRef[@db='",sourcedb,"']",sep=""),
+                                             name="id",
+                                             namespaces=namespaces)
 
-  shortLabel <- as.character(XMLvalueByPath(doc=subDoc,
-                                            path="/ns:interaction/ns:names/ns:shortLabel",
-                                            namespaces=namespaces))
+  shortLabel <- nonNullXMLvalueByPath(doc=subDoc,
+                                      path="/ns:interaction/ns:names/ns:shortLabel",
+                                      namespaces=namespaces)
 
-  fullName <- as.character(XMLvalueByPath(doc=subDoc,
-                                          path="/ns:interaction/ns:names/ns:fullName",
-                                          namespaces=namespaces))
+  fullName <- nonNullXMLvalueByPath(doc=subDoc,
+                                    path="/ns:interaction/ns:names/ns:fullName",
+                                    namespaces=namespaces)
 
-  interactorRef <- as.character(XMLvalueByPath(doc=subDoc,
-                                               path="/ns:interaction/ns:participantList/ns:participant/ns:interactorRef",
-                                               namespaces=namespaces))
+  interactorRef <- nonNullXMLvalueByPath(doc=subDoc,
+                                         path="/ns:interaction/ns:participantList/ns:participant/ns:interactorRef",
+                                         namespaces=namespaces)
 
   attributesList <- parseXmlAttributesListByPath(doc=subDoc,
                                                  path="/ns:interaction/ns:attributeList/ns:attribute[@name]",
