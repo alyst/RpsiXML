@@ -435,6 +435,11 @@ parseXmlComplexNode <- function(node,
   interactorRef <- nonNullXMLvalueByPath(doc=subDoc,
                                          path="/ns:interaction/ns:participantList/ns:participant/ns:interactorRef",
                                          namespaces=namespaces)
+  if(isEmptyNodeSet(interactorRef)) {
+    interactorRef <- nonNullXMLattributeValueByPath(doc=subDoc,
+                                                      path="/ns:interaction/ns:participantList/ns:participant/ns:interactor",
+                                                      name="id", namespaces=namespaces)
+  }
 
   attributesList <- parseXmlAttributesListByPath(doc=subDoc,
                                                  path="/ns:interaction/ns:attributeList/ns:attribute[@name]",
