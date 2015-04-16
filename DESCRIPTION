@@ -1,0 +1,22 @@
+Package: RpsiXML
+Version: 2.10.0
+Date: 2015-04-09
+Title: R interface to PSI-MI 2.5 files
+Author: Jitao David Zhang, Stefan Wiemann, Marc Carlson, with contributions from Tony Chiang
+Maintainer: Jitao David Zhang <jitao_david.zhang@roche.com>
+Depends: methods, annotate (>= 1.21.0), graph (>= 1.21.0), Biobase, RBGL (>= 1.17.0), XML (>= 2.4.0), hypergraph (>= 1.15.2), AnnotationDbi
+Suggests: org.Hs.eg.db, org.Mm.eg.db, org.Dm.eg.db, org.Rn.eg.db, org.Sc.sgd.db,hom.Hs.inp.db, hom.Mm.inp.db, hom.Dm.inp.db, hom.Rn.inp.db, hom.Sc.inp.db,Rgraphviz, ppiStats, ScISI
+Description: Queries, data structure and interface to visualization of interaction datasets. This package inplements the PSI-MI 2.5 standard and supports up to now 8 databases. Further databases supporting PSI-MI 2.5 standard will be added continuously.
+Collate: AllClasses.R
+	 AllGenerics.R
+	 AllMethods.R
+	 SAXhandlers.R
+	 funcsAnnotation.R
+	 hyperGraphs.R
+	 psi25parser.R
+	 psimi25Source.R
+	 validatePSIMI25.R
+	 graphSpeciesConverter.R
+License: LGPL-3
+URL: http://www.bioconductor.org
+biocViews: Infrastructure, Proteomics
