@@ -1,0 +1,344 @@
+% rm(list=ls());library("weaver");Sweave("SuppMat.Rnw", driver=weaver)
+
+%\VignetteIndexEntry{Reading PSI-25 XML files}
+%\VignetteDepends{}
+%\VignettePackage{RpsiXML}
+
+\documentclass[11pt]{article}
+
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{times}
+\usepackage{underscore}
+\SweaveOpts{keep.source=TRUE,eps=FALSE,pdf=TRUE,include=FALSE,prefix=FALSE,width=4,height=4} 
+
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+
+\title{RpsiXML: An R programmatic interface with PSI}
+\author{Jitao David Zhang and Tony Chiang}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We demonstrate the use and capabilities of the software package \Rpackage{RpsiXML} by examples. Thie
+package provides a programmatic interface with those databases which adhere to 
+the PSI-MI XML2.5 standardization for molecular interactions. Each experimental
+dataset from any of the databases can be read into R and converted into a 
+\Rclass{psimi25Graph} object upon which computatational analyses can be conducted. 
+\end{abstract}
+
+\section{Introduction}
+
+Molecular interactions play an important role in the organizational and functional 
+hierarchy of cells and tissues. Such molecular interaction data has been made publicly
+available on a wide variety of public databases. Statistical and computational analysis
+of these datasets necessitates the automated capability of downloading, extracting, 
+parsing, and converting these data into a uniform structure.
+
+Recently, the \textit{Protein Standardization Initiative} has developed the PSI-MI 2.5
+XML schema for documenting molecular interaction data. While XML is a particularly good
+format for data storage and exchange, it is less amenable to compuatational analysis. The
+contents of the XML files need to be parsed and transformed in structures upon which 
+computation analysis is more feasible and apropros. 
+
+The Bioconductor software package \Rpackage{RpsiXML} serves as a programmatic interface
+between the R statistical environment and the PSI-MI 2.5 XML files. This software should be
+able to parse the XML files from any database which implement a valid PSI-MI 2.5 schema; 
+currently, the databases that are supported by \Rpackage{RpsiXML} are:
+
+\begin{itemize}
+  \item[1.] IntAct
+  \item[2.] MINT
+  \item[3.] DIP
+  \item[4.] HPRD
+  \item[5.] BioGRID
+  \item[6.] MIPS/CORUM
+  \item[7.] MatrixDB
+  \item[8.] MPact
+\end{itemize}
+
+\noindent We plan to support other databases which are now porting to the PSI-MI XML2.5 
+schema. 
+
+In this vignette, we demonstrate the basic functionalities of \Rpackage{RpsiXML}.
+
+\section{Preliminaries}
+
+\subsection{Obtaining the XML Files}
+Each of the data repositories has its own FTP or download site from which the PSI-MI 2.5 
+XML files can be obtained. Here we list each database as well as the location of each
+FTP or download site:
+
+\begin{table}[hb]
+  \begin{tabular}{|l|l|}
+    \hline
+    \bf{IntAct} &
+    \textit{ftp://ftp.ebi.ac.uk/pub/databases/intact/current/psi25}\\
+    \hline
+    \bf{Mint} &
+    \textit{ftp://mint.bio.uniroma2.it/pub/release/psi/2.5/current/}\\
+    \hline
+    \bf{DIP} &
+    \textit{http://dip.doe-mbi.ucla.edu/dip/Download.cgi}\\
+    \hline
+    \bf{HPRD} &
+    \textit{http://www.hprd.org/download}\\
+    \hline
+    \bf{The BioGRID} &
+    \textit{http://www.thebiogrid.org/downloads.php}\\
+    \hline
+    \bf{CORUM/MIPS} &
+    \textit{http://mips.gsf.de/genre/proj/corum} \\
+    \hline
+    \bf{MatrixDB} &
+    \textit{not published yet} \\
+    \hline
+    \bf{MPact} &
+    \textit{ftp://ftpmips.gsf.de/yeast/PPI}\\
+    \hline
+  \end{tabular}
+  \label{ta:repos}
+\end{table}
+
+\noindent The DIP repository requires one to create a login account before accessing the data.
+Each of the PSI-MI XML2.5 files should be downloaded to the local file directory which is accessible 
+by the R environment.
+
+We have downloaded XML files from each of the molecular interaction data repository listed above;
+we have, however, modified these datasets by truncating most of the data so as to provide the user
+with helpful sample XML files that is not to large. If the user has the source package, these 
+sample XML files can be found within the \textit{inst/estdata/psi25files/} directory of the package.
+Otherwise, once the package has been loaded, each file can be loaded into an R session with the
+following calls:
+
+\vspace{.05in}
+(First we load the package)
+<<loadlibs, echo=FALSE, results=tex>>=
+library(RpsiXML)
+@ 
+(Then we create a path to the files)
+<<sampleFiles, echo=TRUE, results=tex>>=
+xmlDir <- system.file("/extdata/psi25files",package="RpsiXML")
+gridxml <- file.path(xmlDir, "biogrid_200804_test.xml")
+@ 
+
+\noindent The first line of code above creates a path to the desired directory while the second line
+constructs the path to the \textit{biogrid} sample file in a platform independent manner.
+
+\newpage
+
+Table~\ref{ta:sample} gives the names of the sample XML files with the corresponding database 
+repository:
+
+\begin{table}[hb]
+  \begin{tabular}{|l|l|}
+    \hline
+    \bf{IntAct} &
+    intact$\_$2008_test.xml\\
+    &
+    intact$\_$complexSample.xm\\
+    \hline
+    \bf{Mint} &
+    mint$\_$200711$\_$test.xml\\
+    \hline
+    \bf{DIP} &
+    dip$\_$2008$\_$test.xml\\
+    \hline
+    \bf{HPRD} &
+    hprd$\_$200709$\_$test.xml\\
+    \hline
+    \bf{The BioGRID} &
+    biogrid$\_$200804$\_$test.xml\\
+    \hline
+    \bf{CORUM/MIPS} &
+    mips$\_$2007$\_$test.xml \\
+    \hline
+    \bf{MatrixDB} &
+    matrixdb$\_$20080609.xml \\
+    \hline
+  \end{tabular}
+  \label{ta:sample}
+\end{table}
+
+\noindent It should be noted that \textit{IntAct} has two different kinds of sample XML
+files: the "test" file stores the bait-prey interaction data while the "complex" file
+stores manually curated protein complex membership information. For the scope of this 
+vignette, we will focus on the \textit{IntAct} files as our working examples, but we 
+encourage the reader to work explore the other files as well.
+
+\subsection{XML into R}
+There are two different methods for parsing the PSI-MI XML2.5 files:
+
+\subsubsection{parsePsimi25Interaction}
+The first method relies on the function \Rfunction{parsePsimi25Interaction} which systematically
+searches over the XML tree structure and returns the fields (nodes) of interest. First we obtain
+the XML file we wish to parse:
+
+<<intactInteractionEX, echo=TRUE, results=tex>>=
+intactxml <- file.path(xmlDir, "intact_2008_test.xml")
+intactComplexxml <- file.path(xmlDir,"intact_complexSample.xml")
+@ 
+
+\noindent and then we parse the file using the \Rfunction{parsePsimi25Interaction} function:
+
+<<parseInteraction, echo=TRUE, results=hide>>=
+intactSample <- parsePsimi25Interaction(intactxml, INTACT.PSIMI25,verbose=FALSE)
+intactComplexSample <- parsePsimi25Complex(intactComplexxml, INTACT.PSIMI25,verbose=FALSE)
+@ 
+
+The two arguments taken by \Rfunction{parsePsimi25Interaction} is:
+
+\begin{itemize}
+  \item[1.] A character vector with the relative path to the file of interest (can also be an URL).
+  \item[2.] A supported data repository source file R object.
+\end{itemize}
+
+Because each database repository implements the PSI-MI XML2.5 standards in slightly varing ways, it 
+is necessary to track these differences and to tell the parsing function which implementation 
+to expect. Each of the database supported by RpsiXML has its own corresponding source
+class object (\Robject{INTACT.PSIMI25, MINT.PSIMI25, DIP.PSIMI25, HPRD.PSIMI25, BIOGRID.PSIMI25,}
+and \Robject{MIPS.PSIMI25}). 
+
+The output from the \Rfunction{parsePsimi25Interaction} is an object of type 
+\Robject{psimi25InteractionEntry} or \Robject{psimi25ComplexEntry} depending on the type of
+input XML file. Each is a class used to carry all of the information obtained from the XML
+files be it interaction or complex. From each of these classes, we can obtain various types 
+of information:
+
+\vspace{0.05in}
+(\textit{From the intactSample object})
+<<interactionInfo1>>=
+interact <- interactions(intactSample)[1:3]
+interact
+organismName(intactSample)[1:3]
+releaseDate(intactSample)
+@ 
+\vspace{0.05in}
+(\textit{Looking within each interaction})
+<<interactionInfo2>>=
+lapply(interact, participant)[1:3]
+sapply(interact, bait)[1:3]
+sapply(interact, prey)[1:3]
+sapply(interact, pubmedID)[1:3]
+@ 
+
+Most of the information from the extracted data is self-explanatory; we will, however, highlight 
+some important pieces. The \Robject{interact} object is the output of the \Rfunction{interactions}
+method which provides all the pertinent details for each interaction. This object is a list of the
+\Rclass{psimi25Interaction} class. Upon each individual \Rclass{psimi25Interaction} class, there
+exists methods to extract the individual pieces of information. The \Rfunction{participant} method
+returns the two proteins which were involved in the interaction. If available, the \Rfunction{bait}
+and \Rfunction{prey} methods returns the proteins which serve as their namesake. Each interaction
+is also indexed by the pubmed ID which can also be extracted.
+
+\vspace{0.05in}
+(\textit{From the complexSample object})
+<<interactionInfo1>>=
+comp <- complexes(intactComplexSample)[1:2]
+sapply(comp, complexName)
+@
+
+\subsubsection{psimi25XML2Graph}
+
+While the parsing can be accomplished via the \Rfunction{parsePsimi25Interaction} function, the output
+of this function is not readily accessible for computational analysis. For this case, the function
+\Rfunction{psimi25XML2Graph} is a better choice. For instance we can construct the bait-prey graph
+from the \textit{IntAct} sample XML file:
+
+<<intactGraph>>=
+intactGraph <- psimi25XML2Graph(intactxml, INTACT.PSIMI25, 
+                                type="interaction",verbose=FALSE)
+nodes(intactGraph)
+degree(intactGraph)
+@ 
+
+And we can also build a protein complex membership hyper-graph from the sample complex XML
+file:
+
+<<intactHyperGraph>>=
+intactHG <- psimi25XML2Graph(intactxml, INTACT.PSIMI25, type="complex",verbose=FALSE)
+@ 
+
+There is a caveat for the function \Rfunction{psimi25XML2Graph}; it does not decipher between the
+data within the XML file insomuch that if it is all bait/prey, then it will generate one large 
+graph. If you are sure that you would like to take all the data and create one large graphical
+structure, then a call to this function is appropriate. Otherwise, if some of the data within the
+XML files should be separated, a call to this function is not recommended.
+
+\subsubsection{separateXMLDataByExpt}
+
+A different way to transform the XML data into graphs is to call the \Rfunction{searapteXMLDataByExpt} 
+function. This function will parse bait-prey data into distinct graphs indexed by the pubmed IDs. Note 
+that this function cannot be called upon XML files that record manually curated protein complexes since 
+there is rarely an associated pubmed ID for this type of data.
+
+<<separateXML>>=
+graphs <- separateXMLDataByExpt(xmlFiles = intactxml, psimi25source=INTACT.PSIMI25, 
+                                type="indirect", directed=TRUE, abstract=TRUE,
+                                verbose=FALSE) 
+@ 
+
+Now we look at the input parameters:
+\begin{itemize}
+  \item xmlFiles - a character vector of the relative path to the PSI-MI XML2.5 files relative to the
+    R working directory.
+  \item psimi25source - A supported data repository source R object
+  \item type - character either "direct" or "indirect" signaling the type of interaction wanted
+  \item directed - a logical to determine if the graph returned is either directed or not
+  \item abstract - a logical to determine whether or not the function should also get the abstract 
+    information for each dataset from NCBI
+\end{itemize}
+
+<<showGraph>>=
+graphs
+abstract(graphs$`18296487`)
+@ 
+
+It should be noted that if you are going to parse a large number of XML files, it is not recommended
+to automatically get the abstract information since NCBI has been known to refuse and later ban 
+IP addresses that consistenly demand a high volume of information. For this reason, the \Robject{abstract}
+parameter has been set to FALSE as a default.
+
+One can manually obtain the abstract information as follows:
+
+<<abst>>=
+getAbstractByPMID(names(graphs))
+@ 
+
+\section{Converting Node IDs}
+
+The bait/prey information (when downloaded and converted into an R graph object) is encoded
+by the UniProtKB identification schema. UniProtKB appears to be the most universal naming 
+scheme, and so it offers consistency across databases. If there is a need to convert the names
+of the nodes from the UniProtKB IDs to some other naming scheme, there is two ways of doing so:
+
+\begin{itemize}
+  \item use the R package \Rpackage{biomaRt}
+  \item use the built in method \Rfunction{translateID}
+\end{itemize}
+
+The benefits of using \Rpackage{biomaRt} is that it lets you communicate with Biomart and obtain
+the latest annotations and translations. The drawback is that it is a non-trivial task and is beyond
+the scope of this vignette. The drawbacks of \Rfunction{translateID} is that only the naming schemes
+supported (i.e. arbitrarily chosen) by each database can be supported by \Rpackage{RpsiXML}. The 
+benefit is the ease and simplicity of use.
+
+<<translate>>=
+graphs1 <- translateID(graphs[[1]], to="intact")
+nodes(graphs1)
+@ 
+
+If a particular node cannot be mapped to the naming schema, it will retain the UniprotKB ID. 
+
+\section{Conclusion}
+Once the XML files have been downloaded, parsed, and converted into R grpah objects, there are 
+a number of applicable methods and tools available within R and Bioconductor upon which these 
+data graphs can be analyzed. Some (but not all) packages include: \Rpackage{RBGL}, 
+\Rpackage{ppiStats}, \Rpackage{apComplex}, etc. 
+
+\end{document}

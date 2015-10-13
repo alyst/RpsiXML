@@ -1,0 +1,4 @@
+2008-08-02
+  JDZhang: Add switch of source ID, user could use local package or
+   biomaRt to query proteins not annotated with standard UNIPROT
+   identifier.
