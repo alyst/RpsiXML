@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- created using PSIFileMaker @ The GRID v.001 -->
+<entrySet level="2" version="5" xmlns="net:sf:psidev:mi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="net:sf:psidev:mi http://psidev.sourceforge.net/mi/rel25/src/MIF25.xsd">
+	<entry>
+		<source release="2.0.40" releaseDate="2008-04-26">
+			<names>
+				<shortLabel>Interactions for BIOGRID-ORGANISM-8355</shortLabel>
+				<fullName>The BioGRID: A General Repository for Interaction Datasets, The Samuel Lunenfeld Research Institute, Toronto, Ontario, Canada, http://www.thebiogrid.org</fullName>
+			</names>
+			<bibref>
+				<xref>
+					<primaryRef db="pubmed" id="16381927" secondary="The BioGRID: A General Repository for Interaction Datasets, The Samuel Lunenfeld Research Institute, Toronto, Ontario, Canada, http://www.thebiogrid.org" dbAc="MI:0446" refType="primary-reference" refTypeAc="MI:0358" />
+				</xref>
+			</bibref>
+			<xref>
+				<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0463" refType="primary-reference" refTypeAc="MI:0358" />
+			</xref>
+			<attributeList>
+				<attribute name="url">http://www.thebiogrid.org</attribute>
+				<attribute name="postalAddress">Samuel Lunenfeld Research Institute, 600 University Avenue, Toronto, Ontario, M5G 1X5</attribute>
+				<attribute name="contactEmail">gridadmin@mshri.on.ca</attribute>
+			</attributeList>
+		</source>
+		<availabilityList>
+			<availability id="BIOGRID">This data is freely available to both commercial and academic users for research purposes only. In any articles making use of this data, please refer to Stark C, Breitkreutz BJ, Reguly T, Boucher L, Breitkreutz A, Tyers M. BioGRID: A General Repository for Interaction Datasets. Nucleic Acids Res. Jan1;34:D535-9. This data is distributed for research purposes only, and is provided WITHOUT ANY WARRANTY.</availability>
+		</availabilityList>
+		<experimentList>
+			<experimentDescription id="72250">
+				<names>
+					<shortLabel>English CM (2006)</shortLabel>
+					<fullName>Structural basis for the histone chaperone activity of Asf1-</fullName>
+				</names>
+				<bibref>
+					<xref>
+						<primaryRef db="pubmed" dbAc="MI:0446" id="17081973" refType="primary-reference" refTypeAc="MI:0358" />
+					</xref>
+				</bibref>
+				<xref>
+					<primaryRef db="grid" id="72250" dbAc="MI:0463" />
+				</xref>
+				<interactionDetectionMethod>
+					<names>
+						<shortLabel>Co-crystal Structure</shortLabel>
+						<fullName>Co-crystal Structure</fullName>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="18" dbAc="MI:0463" />
+					</xref>
+				</interactionDetectionMethod>
+			</experimentDescription>
+			<experimentDescription id="4091">
+				<names>
+					<shortLabel>Suto RK (2000)</shortLabel>
+					<fullName>Crystal structure of a nucleosome core particle containing the variant histone H2A.Z.</fullName>
+				</names>
+				<bibref>
+					<xref>
+						<primaryRef db="pubmed" dbAc="MI:0446" id="11101893" refType="primary-reference" refTypeAc="MI:0358" />
+					</xref>
+				</bibref>
+				<xref>
+					<primaryRef db="grid" id="4091" dbAc="MI:0463" />
+				</xref>
+				<interactionDetectionMethod>
+					<names>
+						<shortLabel>Co-crystal Structure</shortLabel>
+						<fullName>Co-crystal Structure</fullName>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="18" dbAc="MI:0463" />
+					</xref>
+				</interactionDetectionMethod>
+			</experimentDescription>
+			<experimentDescription id="5820">
+				<names>
+					<shortLabel>Satijn DP (1997)</shortLabel>
+					<fullName>RING1 is associated with the polycomb group protein complex and acts as a transcriptional repressor.</fullName>
+				</names>
+				<bibref>
+					<xref>
+						<primaryRef db="pubmed" dbAc="MI:0446" id="9199346" refType="primary-reference" refTypeAc="MI:0358" />
+					</xref>
+				</bibref>
+				<xref>
+					<primaryRef db="grid" id="5820" dbAc="MI:0463" />
+				</xref>
+				<interactionDetectionMethod>
+					<names>
+						<shortLabel>Two-hybrid</shortLabel>
+						<fullName>Two-hybrid</fullName>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="3" dbAc="MI:0463" />
+					</xref>
+				</interactionDetectionMethod>
+			</experimentDescription>
+		</experimentList>
+		<interactorList>
+			<interactor id="33639">
+				<names>
+					<shortLabel>YJL115W</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="SGD" id="S000003651" />
+					<secondaryRef db="PROTEIN GI" id="416657" />
+					<secondaryRef db="PROTEIN Accession" id="AAC37512" />
+					<secondaryRef db="PROTEIN GI" id="171091" />
+					<secondaryRef db="PROTEIN Accession" id="AAS56200" />
+					<secondaryRef db="PROTEIN GI" id="45269639" />
+					<secondaryRef db="PROTEIN Accession" id="CAA89410" />
+					<secondaryRef db="PROTEIN GI" id="1008304" />
+					<secondaryRef db="PROTEIN Accession" id="NP 012420" />
+					<secondaryRef db="PROTEIN GI" id="6322346" />
+					<secondaryRef db="GRID_LEGACY" id="3194" />
+					<secondaryRef db="UNIPROTKB" id="P32447" />
+				</xref>
+				<interactorType>
+					<names>
+						<shortLabel>protein</shortLabel>
+						<fullName>protein</fullName>
+					</names>
+					<xref>
+						<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+					</xref>
+				</interactorType>
+				<organism ncbiTaxId="4932">
+					<names>
+						<shortLabel>Budding Yeast</shortLabel>
+						<fullName>Saccharomyces cerevisiae</fullName>
+					</names>
+				</organism>
+			</interactor>
+			<interactor id="100414">
+				<names>
+					<shortLabel>EG399088</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="PROTEIN Accession" id="CAA51455" />
+					<secondaryRef db="PROTEIN GI" id="288992" />
+					<secondaryRef db="UNIPROTKB" id="Q92133" />
+					<secondaryRef db="CDNA Accession" id="NM 001097650" />
+					<secondaryRef db="CDNA GI" id="148234574" />
+					<secondaryRef db="PROTEIN Accession" id="NP 001091119" />
+					<secondaryRef db="PROTEIN GI" id="148234575" />
+				</xref>
+				<interactorType>
+					<names>
+						<shortLabel>protein</shortLabel>
+						<fullName>protein</fullName>
+					</names>
+					<xref>
+						<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+					</xref>
+				</interactorType>
+				<organism ncbiTaxId="8355">
+					<names>
+						<shortLabel>African Clawed Frog</shortLabel>
+						<fullName>Xenopus laevis</fullName>
+					</names>
+				</organism>
+			</interactor>
+			<interactor id="97224">
+				<names>
+					<shortLabel>EG378643</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="N/A" id="N/A" />
+				</xref>
+				<interactorType>
+					<names>
+						<shortLabel>protein</shortLabel>
+						<fullName>protein</fullName>
+					</names>
+					<xref>
+						<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+					</xref>
+				</interactorType>
+				<organism ncbiTaxId="8355">
+					<names>
+						<shortLabel>African Clawed Frog</shortLabel>
+						<fullName>Xenopus laevis</fullName>
+					</names>
+				</organism>
+			</interactor>
+			<interactor id="206173">
+				<names>
+					<shortLabel>EG51788</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="CDNA Accession" id="AK028176" />
+					<secondaryRef db="CDNA GI" id="26389788" />
+					<secondaryRef db="PROTEIN Accession" id="BAC25791" />
+					<secondaryRef db="PROTEIN GI" id="26389789" />
+					<secondaryRef db="CDNA Accession" id="AK044932" />
+					<secondaryRef db="CDNA GI" id="26090616" />
+					<secondaryRef db="CDNA Accession" id="AK088704" />
+					<secondaryRef db="CDNA GI" id="26353769" />
+					<secondaryRef db="PROTEIN Accession" id="BAC40515" />
+					<secondaryRef db="PROTEIN GI" id="26353770" />
+					<secondaryRef db="CDNA Accession" id="AK204242" />
+					<secondaryRef db="CDNA GI" id="56028419" />
+					<secondaryRef db="CDNA Accession" id="AK212062" />
+					<secondaryRef db="CDNA GI" id="56036239" />
+					<secondaryRef db="CDNA Accession" id="AY074806" />
+					<secondaryRef db="CDNA GI" id="18535650" />
+					<secondaryRef db="PROTEIN Accession" id="AAL71864" />
+					<secondaryRef db="PROTEIN GI" id="18535651" />
+					<secondaryRef db="CDNA Accession" id="BC079903" />
+					<secondaryRef db="CDNA GI" id="51262059" />
+					<secondaryRef db="PROTEIN Accession" id="AAH79903" />
+					<secondaryRef db="PROTEIN GI" id="51262060" />
+					<secondaryRef db="CDNA Accession" id="U70494" />
+					<secondaryRef db="CDNA GI" id="1575712" />
+					<secondaryRef db="PROTEIN Accession" id="AAB09578" />
+					<secondaryRef db="PROTEIN GI" id="1575713" />
+					<secondaryRef db="CDNA Accession" id="NM 016750" />
+					<secondaryRef db="PROTEIN Accession" id="NP 058030" />
+					<secondaryRef db="PROTEIN GI" id="7949045" />
+					<secondaryRef db="GRID_LEGACY" id="2008623" />
+					<secondaryRef db="MGI" id="1888388" />
+					<secondaryRef db="CDNA Accession" id="AK143572" />
+					<secondaryRef db="CDNA GI" id="74138095" />
+					<secondaryRef db="PROTEIN Accession" id="BAE25443" />
+					<secondaryRef db="PROTEIN GI" id="74138096" />
+					<secondaryRef db="CDNA Accession" id="AK146181" />
+					<secondaryRef db="CDNA GI" id="74222316" />
+					<secondaryRef db="PROTEIN Accession" id="BAE26959" />
+					<secondaryRef db="PROTEIN GI" id="74222317" />
+					<secondaryRef db="CDNA Accession" id="AK150454" />
+					<secondaryRef db="CDNA GI" id="74219609" />
+					<secondaryRef db="PROTEIN Accession" id="BAE29574" />
+					<secondaryRef db="PROTEIN GI" id="74219610" />
+					<secondaryRef db="CDNA Accession" id="AK151052" />
+					<secondaryRef db="CDNA GI" id="74181607" />
+					<secondaryRef db="PROTEIN Accession" id="BAE30069" />
+					<secondaryRef db="PROTEIN GI" id="74181608" />
+					<secondaryRef db="CDNA Accession" id="AK151462" />
+					<secondaryRef db="CDNA GI" id="74191703" />
+					<secondaryRef db="PROTEIN Accession" id="BAE30420" />
+				</xref>
+				<interactorType>
+					<names>
+						<shortLabel>protein</shortLabel>
+						<fullName>protein</fullName>
+					</names>
+					<xref>
+						<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+					</xref>
+				</interactorType>
+				<organism ncbiTaxId="10090">
+					<names>
+						<shortLabel>House Mouse</shortLabel>
+						<fullName>Mus musculus</fullName>
+					</names>
+				</organism>
+			</interactor>
+			<interactor id="103448">
+				<names>
+					<shortLabel>EG446588</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="PROTEIN Accession" id="AAA49768" />
+					<secondaryRef db="PROTEIN GI" id="214283" />
+					<secondaryRef db="PROTEIN Accession" id="CAA26816" />
+					<secondaryRef db="PROTEIN GI" id="64776" />
+					<secondaryRef db="PROTEIN Accession" id="P02281" />
+					<secondaryRef db="PROTEIN GI" id="122023" />
+					<secondaryRef db="CDNA Accession" id="BC077399" />
+					<secondaryRef db="CDNA GI" id="50603655" />
+					<secondaryRef db="PROTEIN Accession" id="AAH77399" />
+					<secondaryRef db="PROTEIN GI" id="50603656" />
+					<secondaryRef db="CDNA Accession" id="NM 001093284" />
+					<secondaryRef db="CDNA GI" id="148222088" />
+					<secondaryRef db="PROTEIN Accession" id="NP 001086753" />
+					<secondaryRef db="PROTEIN GI" id="148222089" />
+				</xref>
+				<interactorType>
+					<names>
+						<shortLabel>protein</shortLabel>
+						<fullName>protein</fullName>
+					</names>
+					<xref>
+						<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+					</xref>
+				</interactorType>
+				<organism ncbiTaxId="8355">
+					<names>
+						<shortLabel>African Clawed Frog</shortLabel>
+						<fullName>Xenopus laevis</fullName>
+					</names>
+				</organism>
+			</interactor>
+			<interactor id="99445">
+				<names>
+					<shortLabel>EG398110</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="CDNA Accession" id="AF101438" />
+					<secondaryRef db="CDNA GI" id="3860184" />
+					<secondaryRef db="PROTEIN Accession" id="AAC72981" />
+					<secondaryRef db="PROTEIN GI" id="3860185" />
+					<secondaryRef db="CDNA Accession" id="BC072868" />
+					<secondaryRef db="CDNA GI" id="49257280" />
+					<secondaryRef db="PROTEIN Accession" id="AAH72868" />
+					<secondaryRef db="PROTEIN GI" id="49257281" />
+					<secondaryRef db="UNIPROTKB" id="Q9YHC4" />
+					<secondaryRef db="CDNA Accession" id="NM 001088431" />
+					<secondaryRef db="CDNA GI" id="147906970" />
+					<secondaryRef db="PROTEIN Accession" id="NP 001081900" />
+					<secondaryRef db="PROTEIN GI" id="147906971" />
+				</xref>
+				<interactorType>
+					<names>
+						<shortLabel>protein</shortLabel>
+						<fullName>protein</fullName>
+					</names>
+					<xref>
+						<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+					</xref>
+				</interactorType>
+				<organism ncbiTaxId="8355">
+					<names>
+						<shortLabel>African Clawed Frog</shortLabel>
+						<fullName>Xenopus laevis</fullName>
+					</names>
+				</organism>
+			</interactor>
+			<interactor id="111947">
+				<names>
+					<shortLabel>DAQB-314F24.3</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="MIM" id="602045" />
+					<secondaryRef db="PROTEIN Accession" id="CAA20235" />
+					<secondaryRef db="PROTEIN GI" id="3820982" />
+					<secondaryRef db="PROTEIN Accession" id="CAI17650" />
+					<secondaryRef db="PROTEIN GI" id="55961767" />
+					<secondaryRef db="PROTEIN Accession" id="CAI18069" />
+					<secondaryRef db="PROTEIN GI" id="55961287" />
+					<secondaryRef db="PROTEIN Accession" id="CAI41841" />
+					<secondaryRef db="PROTEIN GI" id="57209744" />
+					<secondaryRef db="PROTEIN Accession" id="Q06587" />
+					<secondaryRef db="CDNA Accession" id="AI828228" />
+					<secondaryRef db="CDNA GI" id="5448899" />
+					<secondaryRef db="CDNA Accession" id="BC002922" />
+					<secondaryRef db="CDNA GI" id="33877353" />
+					<secondaryRef db="PROTEIN Accession" id="AAH02922" />
+					<secondaryRef db="PROTEIN GI" id="33877354" />
+					<secondaryRef db="CDNA Accession" id="BC051866" />
+					<secondaryRef db="CDNA GI" id="34194609" />
+					<secondaryRef db="PROTEIN Accession" id="AAH51866" />
+					<secondaryRef db="PROTEIN GI" id="30354168" />
+					<secondaryRef db="CDNA Accession" id="BI259576" />
+					<secondaryRef db="CDNA GI" id="14817047" />
+					<secondaryRef db="CDNA Accession" id="BT007352" />
+					<secondaryRef db="CDNA GI" id="30583542" />
+					<secondaryRef db="PROTEIN Accession" id="AAP36016" />
+					<secondaryRef db="PROTEIN GI" id="30583543" />
+					<secondaryRef db="CDNA Accession" id="Z14000" />
+					<secondaryRef db="CDNA GI" id="296063" />
+					<secondaryRef db="PROTEIN Accession" id="CAA78389" />
+					<secondaryRef db="PROTEIN GI" id="296064" />
+					<secondaryRef db="CDNA Accession" id="NM 002931" />
+					<secondaryRef db="CDNA GI" id="51479191" />
+					<secondaryRef db="PROTEIN Accession" id="NP 002922" />
+					<secondaryRef db="PROTEIN GI" id="51479192" />
+					<secondaryRef db="GRID_LEGACY" id="1005657" />
+					<secondaryRef db="PROTEIN Accession" id="CAI95620" />
+					<secondaryRef db="PROTEIN GI" id="66347232" />
+					<secondaryRef db="HGNC" id="10018" />
+					<secondaryRef db="HPRD" id="03624" />
+					<secondaryRef db="CDNA Accession" id="CR594955" />
+					<secondaryRef db="CDNA GI" id="50475762" />
+					<secondaryRef db="CDNA Accession" id="CR598354" />
+					<secondaryRef db="CDNA GI" id="50479161" />
+					<secondaryRef db="CDNA Accession" id="CR604365" />
+					<secondaryRef db="CDNA GI" id="50485172" />
+					<secondaryRef db="CDNA Accession" id="CR606762" />
+					<secondaryRef db="CDNA GI" id="50487569" />
+					<secondaryRef db="CDNA Accession" id="CR608675" />
+					<secondaryRef db="CDNA GI" id="50489482" />
+					<secondaryRef db="CDNA Accession" id="CR624041" />
+				</xref>
+				<interactorType>
+					<names>
+						<shortLabel>protein</shortLabel>
+						<fullName>protein</fullName>
+					</names>
+					<xref>
+						<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+					</xref>
+				</interactorType>
+				<organism ncbiTaxId="9606">
+					<names>
+						<shortLabel>Human</shortLabel>
+						<fullName>Homo sapiens</fullName>
+					</names>
+				</organism>
+			</interactor>
+		</interactorList>
+		<interactionList>
+			<interaction id="238503">
+				<names>
+					<shortLabel>33639-100414</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="grid" dbAc="MI:0463" id="238503" secondary="33639-100414" />
+				</xref>
+				<experimentList>
+					<experimentRef>72250</experimentRef>
+				</experimentList>
+				<participantList>
+					<participant id="33639">
+						<interactorRef>33639</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>bait</shortLabel>
+									<fullName>bait</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0496" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+					<participant id="100414">
+						<interactorRef>100414</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>prey</shortLabel>
+									<fullName>prey</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0498" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+				</participantList>
+				<interactionType>
+					<names>
+						<shortLabel>Co-crystal Structure</shortLabel>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="18" dbAc="MI:0463" />
+					</xref>
+				</interactionType>
+			</interaction>
+			<interaction id="251840">
+				<names>
+					<shortLabel>33639-97224</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="grid" dbAc="MI:0463" id="251840" secondary="33639-97224" />
+				</xref>
+				<experimentList>
+					<experimentRef>72250</experimentRef>
+				</experimentList>
+				<participantList>
+					<participant id="33639">
+						<interactorRef>33639</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>bait</shortLabel>
+									<fullName>bait</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0496" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+					<participant id="97224">
+						<interactorRef>97224</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>prey</shortLabel>
+									<fullName>prey</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0498" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+				</participantList>
+				<interactionType>
+					<names>
+						<shortLabel>Co-crystal Structure</shortLabel>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="18" dbAc="MI:0463" />
+					</xref>
+				</interactionType>
+			</interaction>
+			<interaction id="262240">
+				<names>
+					<shortLabel>206173-103448</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="grid" dbAc="MI:0463" id="262240" secondary="206173-103448" />
+				</xref>
+				<experimentList>
+					<experimentRef>4091</experimentRef>
+				</experimentList>
+				<participantList>
+					<participant id="206173">
+						<interactorRef>206173</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>bait</shortLabel>
+									<fullName>bait</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0496" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+					<participant id="103448">
+						<interactorRef>103448</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>prey</shortLabel>
+									<fullName>prey</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0498" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+				</participantList>
+				<interactionType>
+					<names>
+						<shortLabel>Co-crystal Structure</shortLabel>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="18" dbAc="MI:0463" />
+					</xref>
+				</interactionType>
+			</interaction>
+			<interaction id="262241">
+				<names>
+					<shortLabel>206173-97224</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="grid" dbAc="MI:0463" id="262241" secondary="206173-97224" />
+				</xref>
+				<experimentList>
+					<experimentRef>4091</experimentRef>
+				</experimentList>
+				<participantList>
+					<participant id="206173">
+						<interactorRef>206173</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>bait</shortLabel>
+									<fullName>bait</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0496" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+					<participant id="97224">
+						<interactorRef>97224</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>prey</shortLabel>
+									<fullName>prey</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0498" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+				</participantList>
+				<interactionType>
+					<names>
+						<shortLabel>Co-crystal Structure</shortLabel>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="18" dbAc="MI:0463" />
+					</xref>
+				</interactionType>
+			</interaction>
+			<interaction id="263576">
+				<names>
+					<shortLabel>99445-111947</shortLabel>
+				</names>
+				<xref>
+					<primaryRef db="grid" dbAc="MI:0463" id="263576" secondary="99445-111947" />
+				</xref>
+				<experimentList>
+					<experimentRef>5820</experimentRef>
+				</experimentList>
+				<participantList>
+					<participant id="99445">
+						<interactorRef>99445</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>bait</shortLabel>
+									<fullName>bait</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0496" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+					<participant id="111947">
+						<interactorRef>111947</interactorRef>
+						<experimentalRoleList>
+							<experimentalRole>
+								<names>
+									<shortLabel>prey</shortLabel>
+									<fullName>prey</fullName>
+								</names>
+								<xref>
+									<primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0498" refType="identity" refTypeAc="MI:0356"/>
+								</xref>
+							</experimentalRole>
+						</experimentalRoleList>
+					</participant>
+				</participantList>
+				<interactionType>
+					<names>
+						<shortLabel>Two-hybrid</shortLabel>
+					</names>
+					<xref>
+						<primaryRef db="grid" id="3" dbAc="MI:0463" />
+					</xref>
+				</interactionType>
+			</interaction>
+		</interactionList>
+	</entry>
+</entrySet>

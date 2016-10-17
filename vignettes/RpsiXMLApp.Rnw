@@ -1,0 +1,315 @@
+%\VignetteIndexEntry{Application Examples of RpsiXML package}
+%\VignetteDepends{RBGL, Rgraphviz, ppiStats}
+%\VignettePackage{RpsiXML}
+
+\documentclass[11pt]{article}
+
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{subfigure}
+\usepackage[pdftex]{graphicx}
+\SweaveOpts{keep.source=TRUE,eps=FALSE,pdf=TRUE,prefix=FALSE} 
+
+% R part
+\newcommand{\todo}[2]{\textit{\textbf{To do:} (#1) #2}}
+\newcommand{\fixme}[2]{\textit{\textbf{FIXME:} (#1) #2}}
+\newcommand{\R}[1]{{\textsf{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\Metas}[1]{{\texttt{#1}}}
+\newcommand{\myincfig}[3]{%
+  \begin{figure}[htbp]
+    \begin{center}
+      \includegraphics[width=#2]{#1}
+      \caption{\label{#1}#3}
+    \end{center}
+  \end{figure}
+}
+\newcommand{\mysubfig}[8]{%
+  \begin{figure}[htbp]
+    \begin{center}
+      \subfigure[#3]{
+        \label{#1}
+        \includegraphics[width=#2]{#1}
+      }
+      \subfigure[#6]{
+        \label{#4}
+        \includegraphics[width=#5]{#4}
+      }
+      \caption{#7}
+      \label{#8}
+    \end{center}
+  \end{figure}
+}
+
+\begin{document}
+\setkeys{Gin}{width=0.9\textwidth}
+\title{RpsiXML: Application Examples}
+\author{Jitao David Zhang and Tony Chiang}
+\maketitle
+
+\begin{abstract}
+  % 1. Why do we care about the problem?
+  % 2. What is the problem?
+  % 3. How do we solve it?
+  % 4. What is the result?
+  % 5. What are the implications of the result?
+  \Rpackage{RpsiXML} allows the communication between protein interaction data
+  stored in PSI-MI XML format and the statistical and computational
+  environment of \R{R} and \R{Bioconductor}. In the vignette
+  \emph{RpsiXML}, we introduced how to read in PSI-MI XML 2.5 files
+  with \Rpackage{RpsiXML}. In this vignette, we illustrate the use of
+  \Rpackage{RpsiXML} with example. These applications demonstrate the
+  power of the package in analyzing protein-protein interaction
+  networks (PPIN).
+\end{abstract}
+
+\section{Introduction}
+
+The systematic mapping of protein interactions by bait-prey techniques
+contributes a unique and novel perspective on the global picture of cellular machines. We introduce \R{R} and \R{Bioconductor}
+package \Rpackage{RpsiXML} as an interface between standarized
+protein-protein interaction data and statistical and computational
+environment, and a collection of tools for statistical analysis of
+graph representations of these data. In this vignette we use an small toy
+protein protein interaction network to illustrate some aspects of the
+package usage.
+
+To this end we first load neccessary packages.
+<<lib, echo=TRUE>>=
+library(RpsiXML)
+library(ppiStats)
+library(Rgraphviz)
+library(RBGL)
+@ 
+
+\section{Statistics of Protein-Protein Interaction Networks}
+Upon reading the protein-protein interaction data into \R{R}
+environment, one intuitive approach to study it is to query
+the statistics of the network. In this section we will use tools
+implemented in \Rpackage{RpsiXML}, \Rpackage{graph},
+\Rpackage{ppiStats} and
+\Rpackage{RBGL} to study the some statistical characteristics of a
+sample dataset provided by \textit{IntAct}. And
+\Rpackage{Rgraphviz} package is used to visualize some results.
+
+<<parse, echo=TRUE, results=hide>>=
+xmlDir <- system.file("/extdata/psi25files",package="RpsiXML")
+intactxml <- file.path(xmlDir, "intact_2008_test.xml")
+x <- psimi25XML2Graph(intactxml, INTACT.PSIMI25, verbose=FALSE)
+@ 
+
+<<visGraph, echo=FALSE, results=hide, fig=TRUE, include=FALSE>>=
+nA <- makeNodeAttrs(x, label="", fillcolor="lightblue", width=0.4, height=0.4)
+plot(x, "neato", nodeAttrs=nA)
+@ 
+
+<<removeSelfLoop, echo=FALSE, fig=TRUE, include=FALSE>>=
+xn <- removeSelfLoops(x)
+nA <- makeNodeAttrs(xn, label="", fillcolor="lightblue", width=0.4, height=0.4)
+plot(xn, "neato", nodeAttrs=nA)
+@ 
+
+\mysubfig{visGraph}{0.45\textwidth}{Original graph}{removeSelfLoop}{0.45\textwidth}{Self-loops removed}{Sample
+  dataset from \textit{IntAct} data repository, before and after
+  removing self-loops.}{visGraphWaWOloop}
+
+
+The graph contains \Sexpr{numNodes(x)} proteins (nodes) and
+\Sexpr{numEdges(x)} interactions (edges), as visualized in Figure
+\ref{visGraph}, which suggests there are quite a few loops, namely
+edges that connect a vertex to itself. The proteins with such a
+self-loop interact with themselves, for example by forming dimers (or
+polymers). We count how many proteins have such an attribute.
+
+<<detectSelfLoop>>=
+isSelf <- function(g) {
+  ns <- nodes(g)
+  sapply(ns, function(x) x %in% adj(g, x)[[1]])
+}
+isSelfLoop <- isSelf(x)
+selfCount <- sum(isSelfLoop)
+print(selfCount)
+@ 
+
+The results show that \Sexpr{selfCount} proteins interact with
+themselves. In the next steps, these self-loops are removed, since
+they raise special issues of certain graph statistics like degree
+for which we don't delve into details. The graph after removing
+loops are visualized in Figure \ref{removeSelfLoop}.
+
+<<outdHist, echo=FALSE, results=hide,fig=TRUE, include=FALSE>>=
+opar <- par(mar=c(4,4,0,1))
+ds <- degree(xn)
+hist(ds[[2]], xlab="", main="")
+@ 
+
+<<indHist, echo=FALSE, results=hide, fig=TRUE, include=FALSE>>=
+opar <- par(mar=c(4,4,0,1))
+hist(ds[[1]], xlab="", main="")
+@ 
+
+\mysubfig{outdHist}{0.45\textwidth}{Out-degree}{indHist}{0.45\textwidth}{In-degree}{Histograms
+of degree distribution in the graph}{degreeHist}
+
+Even though it is a small network, the sample protein-protein
+interaction network seems to be like a scale-free
+network, whose degree distribution follows a power law, or at least skewed, as seen in
+Figure \ref{degreeHist}. Studies on
+larger protein-protein interaction networks suggests the human interactome
+may be of a scale-free network, although there is also discussion
+whether the interactome is rather geometric. We refer interested
+readers to related references. 
+
+One problem of special interest is to find cliques in protein
+interaction networks. A \emph{clique} is a complete subgraph, i.e.,
+there is an edge between every pair of vertices. \emph{Maximum Clique}
+problem is to find the largest clique in a graph. We use
+\Rfunction{maxClique} function implemented in \Rpackage{RBGL} to find
+all cliques in the example graph.
+
+<<findClique, echo=TRUE>>=
+xu <- ugraph(xn)
+cls <- maxClique(xu)$maxCliques
+cs <- sapply(cls,length)
+cls[cs==max(cs)]
+@ 
+
+<<countClique,echo=FALSE, results=hide>>=
+cc <- table(cs)
+c4 <- cc[["4"]]
+c3 <- cc[["3"]]
+@ 
+
+<<visClique,fig=TRUE, echo=FALSE, include=FALSE>>=
+c4ns <- cls[cs==max(cs)]
+c4a <- c4ns[[1]]
+c4b <- c4ns[[2]]
+ns <- nodes(xn); ncols <- rep("lightblue", length(ns))
+ncols[ns %in% c4a] <- "#FF0033"
+ncols[ns %in% c4b] <- "#FFFF33"
+ncols[ns %in% intersect(c4a,c4b)] <- "#FF8033"
+nA <- makeNodeAttrs(xn, fillcolor=ncols, label="",width=0.4, height=0.4)
+plot(xn, "neato", nodeAttrs=nA)
+@ 
+
+<<visCliqueAlone, fig=TRUE, echo=FALSE, include=FALSE>>=
+c4nodes <- unique(c(c4a, c4b))
+c4sub <- subGraph(c4nodes, xn)
+ns <- nodes(c4sub); ncols <- rep("lightblue", length(ns))
+ncols[ns %in% c4a] <- "#FF0033"
+ncols[ns %in% c4b] <- "#FFFF33"
+ncols[ns %in% intersect(c4a,c4b)] <- "#FF8033"
+nA <- makeNodeAttrs(c4sub, fillcolor=ncols)
+plot(c4sub, "neato", nodeAttrs=nA)
+@ 
+
+\mysubfig{visClique}{0.45\textwidth}{sample
+  graph}{visCliqueAlone}{0.45\textwidth}{two cliques}{Two cliques of size 4 found in the example network, colored with
+  yellow (A4YJD4) and red (Q6NW92) individually. The two cliques share three common
+  nodes, whose color is orange due to blending.}{maxClique}
+
+In graph \Robject{xn}, \Sexpr{length(cls)} cliques are found. \Sexpr{c4} of
+them is of size four, and \Sexpr{c3} of size three. Figure
+\ref{maxClique} illustrate the two 4-cliques in the graph. The cliques
+may be explained by functional protein complexes, and the sharing
+nodes between cliques could be forming core facility of the complex.
+
+\section{Assess reciprocity of interactions}
+Bait to prey systems allow for the testing of an interaction between a
+pair of proteins in two directions. If bi-directionally tested, we
+anticipate the result as both positive or both negative. Failure to
+attain reciprocity indicates some form of error.
+
+Here we assess the reciprocity of the interactions in the example
+network. We use the \Rfunction{assessSymmetry} function implemented in
+\Rpackage{ppiStats} to access the symmetry.
+
+<<assessSym, echo=TRUE>>=
+sym <- assessSymmetry(xn, bpGraph=TRUE)
+head(sym$deg)
+@ 
+
+The \Robject{deg} element in the returned list is a $3 \times n$
+matrix. The rows are indexed by each protein. Three columns gives the
+number of reciprocated edges, unreciprocated out-edges and
+unreciprocated in-edges, respectively. 
+
+<<symStat, echo=FALSE>>=
+deg <- sym[[1]]
+outR <- deg[,2]==0
+inR <- deg[,3]==0
+nrCount <- outR & inR
+@ 
+
+Among the \Sexpr{numNodes(xn)} nodes, \Sexpr{nrCount} nodes have all
+reprocated edges.\Sexpr{sum(deg[,3])} edges out of \Sexpr{numEdges(xn)}are uni-directional, that
+is, may indicate some form of error.
+
+For demonstration let us assume now all the protein in the network
+have been tested twice, e.g. both as viable bait and as viable
+prey. Then one could used method of moments to estimate false positive
+and false negative error probablities. The model is described in the
+vignette \textit{Stochastic and systematic errors in PPI data, by
+  looking at unireciprocated in- or out-edges} by W.Hubaer, T.Chiang
+and R.Gentleman. The estimated false positive and false negative rates
+are visualized in Figure \ref{fpfn}
+
+\begin{figure}[htbp]
+\centering
+<<est, echo=TRUE, fig=TRUE>>=
+nint <- 49:56
+nrec <- sum(deg[,1])
+nunr <- sum(deg[,2])
+ntot <- nrow(deg)
+est <- estErrProbMethodOfMoments(nint=nint, nrec=nrec, nunr=nunr, ntot=ntot)
+plot(est[, c("pfp2", "pfn2")], type="l", col="orange", lwd=2,
+     xlab=expression(p[FP]), ylab=expression(p[FN]), 
+     xlim=c(-0.001, 0.005), ylim=c(-0.001, 0.045))
+abline(h=0, v=0, lty=2)
+@ 
+\caption{False positive ($p_{FP}$) and false negative ($p_{FN}$) rate
+  of the sample graph estimated by the method of moments. The relative
+  low false positive and false negative rates can be explained by the
+  fact that most edges in the example graph are reprocated.}\label{fpfn}
+\end{figure}
+
+The estimated values of false positive ($p_{FP}$) and false negative
+($p_{FN}$) rate are very small, this can be explained by the
+observation that most edges in the example graph are
+reprocated. 
+
+<<unload, echo=FALSE, results=hide>>=
+library(RpsiXML)
+@ 
+%\section{Build computational interaction network with orthologues}
+
+\section{Discussion}
+We have shown how to use \Rpackage{RpsiXML} package to study
+protein-protein interaction data with statistical and mathematical
+tools implemented in \R{R} and \R{Bioconductor} with several
+examples. 
+
+This application example is dynamic, that is, we will implement new
+examples or revise old ones from time to time to demonstrate the use
+of package, depending on the feedback of users.
+
+\section{Acknowledgements}
+We would like to thank Wolfgang Huber, Robert Gentleman, Denise Scholtens,
+Sandra Orchard, Nick Luscombe, and Li Wang for their very helpful and insightful 
+comments on both the software. We would like to thank the curators of \textit{IntAct}, \textit{MINT}, \textit{DIP}, \textit{HPRD},
+\textit{BioGRID}, \textit{MatrixDB}, \textit{CORUM}, and \textit{MPact} in 
+working with us and by guiding us through their molecular interaction 
+repositories.
+  
+\section{Session Info}
+The script runs within the following session:
+<<sessionInfo, echo=FALSE, results=verbatim>>=
+sessionInfo()
+@
+
+\end{document}

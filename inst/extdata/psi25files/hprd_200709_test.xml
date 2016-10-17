@@ -1,0 +1,595 @@
+<entrySet level="2" version="5" xmlns="net:sf:psidev:mi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="net:sf:psidev:mi http://psidev.sourceforge.net/mi/rel25/src/MIF25.xsd">
+  <entry>
+      <source>
+         <names>
+           <shortLabel>HPRD</shortLabel>
+            <fullName>Human Protein Reference Database</fullName>
+         </names>
+         <bibref>
+             <xref>
+                  <primaryRef db="PubMed" id="14525934"/>
+                  <secondaryRef db="PubMed" id="14681466"/>
+                  <secondaryRef db="PubMed" id="16381900"/>
+             </xref>
+         </bibref>
+      </source>
+      <availabilityList>
+         <availability id="1">
+              This data is copyrighted by Johns Hopkins University.
+              Commercial entities may not use this without prior licensing
+              authorization. Other databases must agree to enforce the same
+              licensing guidelines before making this data public on their website.
+         </availability>
+      </availabilityList>
+    <experimentList>
+     <experimentDescription id="0">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="9443898" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>vv</shortLabel>
+           <fullName>in vivo</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0493" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="1">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="7738346" refType="primary-reference" refTypeAc="MI:0358"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="9606214" refType="primary-reference" refTypeAc="MI:0358"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="12847106" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>vv</shortLabel>
+           <fullName>in vivo</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0493" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="2">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="7738346" refType="primary-reference" refTypeAc="MI:0358"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="9606214" refType="primary-reference" refTypeAc="MI:0358"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="12847106" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>vt</shortLabel>
+           <fullName>in vitro</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0492" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="3">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="9606214" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>vt</shortLabel>
+           <fullName>in vitro</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0492" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="4">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="11790773" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>vv</shortLabel>
+           <fullName>in vivo</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0493" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="5">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="11790773" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>2H</shortLabel>
+           <fullName>two hybrid</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0018" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="6">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="15140227" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>vt</shortLabel>
+           <fullName>in vitro</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0492" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="7">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="12707304" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>vv</shortLabel>
+           <fullName>in vivo</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0493" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+     <experimentDescription id="8">
+       <bibref>
+          <xref>
+            <primaryRef db="pubmed" dbAc="MI:0446" id="12707304" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+       </bibref>
+       <interactionDetectionMethod>
+         <names>
+           <shortLabel>2H</shortLabel>
+           <fullName>two hybrid</fullName>
+         </names>
+         <xref>
+             <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0018" refType="identity" refTypeAc="MI:0356"/>
+         </xref>
+       </interactionDetectionMethod>
+     </experimentDescription>
+    </experimentList>
+    <interactorList>
+     <interactor id="00515">
+       <names>
+         <shortLabel>Desmoglein 1</shortLabel>
+         <alias type="gene name" typeAc="MI:0301">Desmosomal glycoprotein 1</alias>
+         <alias type="gene name" typeAc="MI:0301">DG1</alias>
+         <alias type="gene name" typeAc="MI:0301">Pemphigus foliaceus antigen</alias>
+         <alias type="gene name" typeAc="MI:0301">DSG</alias>
+         <alias type="gene name" typeAc="MI:0301">CDHF4</alias>
+         <alias type="gene name" typeAc="MI:0301">Desmoglein 1 preproprotein</alias>
+         <alias type="gene name" typeAc="MI:0301">DGI</alias>
+       </names>
+       <xref>
+         <primaryRef db="HPRD" dbAc="MI:0468" id="00515" refType="identity" refTypeAc="MI:0356"/>
+         <secondaryRef db="uniprot" dbAc="MI:0486" id="Q02413"/>
+         <secondaryRef db="entrezgene" dbAc="MI:0477" id="1828"/>
+         <secondaryRef db="omim" dbAc="MI:0480" id="125670"/>
+       </xref>
+       <interactorType>
+          <names>
+             <shortLabel>protein</shortLabel>
+             <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326"/>
+          </xref>
+       </interactorType>
+       <organism ncbiTaxId="40674">
+         <names>
+           <shortLabel>Mammalia</shortLabel>
+           <fullName>Mammalia</fullName>
+         </names>
+       </organism>
+       <sequence>
+mdwsffrvva mlfiflvvve vnsefriqvr dyntkngtik whsirrqkre 
+wikfaaacre gednskrnpi akihsdcaan qqvtyrisgv gidqppygif 
+vinqktgein itsivdrevt pffiiycral nsmgqdlerp lelrvrvldi 
+ndnppvfsma tfagqieens nantlvmiln atdadepnnl nskiafkiir 
+qepsdspmfi inrntgeirt mnnfldreqy gqyalavrgs drdggadgms 
+aececnikil dvndnipyme qssytieiqe ntlnsnllei rvidldeefs 
+anwmaviffi sgnegnwfei emnertnvgi lkvvkpldye amqslqlsig 
+vrnkaefhhs imsqyklkas aisvtvlnvi egpvfrpgsk tyvvtgnmgs 
+ndkvgdfvat dldtgrpstt vryvmgnnpa dllavdsrtg kltlknkvtk 
+eqynmlggky qgtilsiddn lqrtctgtin iniqsfgndd rtntepntki 
+ttntgrqest sstnydtstt stdssqvyss epgngakdll sdnvhfgpag 
+igllimgflv lglvpflmic cdcggaprsa agfepvpecs dgaihswave 
+gpqpeprdit tvipqippdn aniiecidns gvytneyggr emqdlggger 
+mtgfeltegv ktsgmpeicq eysgtlrrns mrecreggln mnfmesyfcq 
+kayayadede grpsndclli ydiegvgspa gsvgccsfig edlddsfldt 
+lgpkfkklad islgkesypd ldpswppqst epvclpqete pvvsghppis 
+phfgtttvis estypsgpgv lhpkpildpl gygnvtvtes yttsdtlkps 
+vhvhdnrpas nvvvtervvg pisgadlhgm lempdlrdgs nvivtervia 
+pssslptslt ihhpressnv vvterviqpt sgmigslsmh pelanahnvi 
+vtervvsgag vtgisgttgi sggigssglv gtsmgagsga lsgagisggg 
+iglsslggta sighmrsssd hhfnqtigsa spstarsrit kystvqysk
+       </sequence>
+     </interactor>
+     <interactor id="00512">
+       <names>
+         <shortLabel>Desmocollin 2</shortLabel>
+         <alias type="gene name" typeAc="MI:0301">Desmocollin 2 isoform Dsc2b preproprotein</alias>
+         <alias type="gene name" typeAc="MI:0301">Desmocollin 2 isoform Dsc2a preproprotein</alias>
+         <alias type="gene name" typeAc="MI:0301">Desmosomal Glycoprotein II/III</alias>
+         <alias type="gene name" typeAc="MI:0301">DG2/3</alias>
+         <alias type="gene name" typeAc="MI:0301">DG2</alias>
+         <alias type="gene name" typeAc="MI:0301">Desmocollin 2A/2B</alias>
+         <alias type="gene name" typeAc="MI:0301">Desmocollin II</alias>
+         <alias type="gene name" typeAc="MI:0301">Type II desmocollin</alias>
+       </names>
+       <xref>
+         <primaryRef db="HPRD" dbAc="MI:0468" id="00512" refType="identity" refTypeAc="MI:0356"/>
+         <secondaryRef db="uniprot" dbAc="MI:0486" id="Q02487"/>
+         <secondaryRef db="entrezgene" dbAc="MI:0477" id="1824"/>
+         <secondaryRef db="omim" dbAc="MI:0480" id="125645"/>
+       </xref>
+       <interactorType>
+          <names>
+             <shortLabel>protein</shortLabel>
+             <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326"/>
+          </xref>
+       </interactorType>
+       <organism ncbiTaxId="40674">
+         <names>
+           <shortLabel>Mammalia</shortLabel>
+           <fullName>Mammalia</fullName>
+         </names>
+       </organism>
+       <sequence>
+meaarpsgsw ngalcrllll tlailifasd acknvtlhvp skldaeklvg 
+rvnlkecfta anlihssdpd fqiledgsvy ttntillsse krsftillsn 
+tenqekkkif vflehqtkvl kkrhtkekvl rrakrrwapi pcsmlenslg 
+pfplflqqvq sdtaqnytiy ysirgpgvdq eprnlfyver dtgnlyctrp 
+vdreqyesfe iiafattpdg ytpelplpli ikiedendny pifteetytf 
+tifencrvgt tvgqvcatdk depdtmhtrl kysiigqvpp sptlfsmhpt 
+tgvitttssq ldrelidkyq lkikvqdmdg qyfglqttst ciiniddvnd 
+hlptftrtsy vtsveentvd veilrvtved kdlvntanwr anytilkgne 
+ngnfkivtda ktnegvlcvv kplnyeekqq milqigvvne apfsreaspr 
+samstatvtv nvedqdegpe cnppiqtvrm kenaevgtts ngykaydpet 
+rsssgirykk ltdptgwvti dentgsikvf rsldreaeti kngiynitvl 
+asdqggrtct gtlgiilqdv ndnspfipkk tviickptms saeivavdpd 
+epihgppfdf slesstsevq rmwrlkaind taarlsyqnd ppfgsyvvpi 
+tvrdrlgmss vtsldvtlcd citendcthr vdpriggggv qlgkwailai 
+llgiallfci lftlvcgasg tskqpkvipd dlaqqnlivs nteapgddkv 
+ysangfttqt vgasaqgvcg tvgsgikngg qetiemvkgg hqtsescrga 
+ghhhtldscr gghtevdncr ytysewhsft qprlgeesir ghtlikn
+       </sequence>
+     </interactor>
+     <interactor id="01414">
+       <names>
+         <shortLabel>Catenin, gamma</shortLabel>
+         <alias type="gene name" typeAc="MI:0301">Junction plakoglobin</alias>
+         <alias type="gene name" typeAc="MI:0301">Plakoglobin</alias>
+         <alias type="gene name" typeAc="MI:0301">PKGB</alias>
+         <alias type="gene name" typeAc="MI:0301">Desmoplakin III</alias>
+         <alias type="gene name" typeAc="MI:0301">DP III</alias>
+         <alias type="gene name" typeAc="MI:0301">DP3</alias>
+       </names>
+       <xref>
+         <primaryRef db="HPRD" dbAc="MI:0468" id="01414" refType="identity" refTypeAc="MI:0356"/>
+         <secondaryRef db="uniprot" dbAc="MI:0486" id="P14923"/>
+         <secondaryRef db="entrezgene" dbAc="MI:0477" id="3728"/>
+         <secondaryRef db="omim" dbAc="MI:0480" id="173325"/>
+       </xref>
+       <interactorType>
+          <names>
+             <shortLabel>protein</shortLabel>
+             <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326"/>
+          </xref>
+       </interactorType>
+       <organism ncbiTaxId="40674">
+         <names>
+           <shortLabel>Mammalia</shortLabel>
+           <fullName>Mammalia</fullName>
+         </names>
+       </organism>
+       <sequence>
+mevmnlmeqp ikvtewqqty tydsgihsga ntcvpsvssk gimeedeacg 
+rqytlkkttt ytqgvppsqg dleyqmstta rakrvreamc pgvsgedssl 
+llatqvegqa tnlqrlaeps qllksaivhl inyqddaela tralpeltkl 
+lndedpvvvt kaamivnqls kkeasrralm gspqlvaavv rtmqntsdld 
+tarcttsilh nlshhregll aifksggipa lvrmlsspve svlfyaittl 
+hnlllyqega kmavrladgl qkmvpllnkn npkflaittd clqllaygnq 
+eskliilang gpqalvqimr nysyekllwt tsrvlkvlsv cpsnkpaive 
+aggmqalgkh ltsnsprlvq nclwtlrnls dvatkqegle svlkilvnql 
+svddvnvltc atgtlsnltc nnsknktlvt qnsgvealih ailragdkdd 
+itepavcalr hltsrhpeae maqnsvrlny gipaivklln qpnqwplvka 
+tiglirnlal cpanhaplqe aaviprlvql lvkahqdaqr hvaagtqqpy 
+tdgvrmeeiv egctgalhil ardpmnrmei frlntiplfv qllyssveni 
+qrvaagvlce laqdkeaada idaegasapl mellhsrneg tatyaaavlf 
+risedknpdy rkrvsveltn slfkhdpaaw eaaqsmipin epygddmdat 
+yrpmyssdvp ldplemhmdm dgdypidtys dglrppypta dhmla
+       </sequence>
+     </interactor>
+     <interactor id="03579">
+       <names>
+         <shortLabel>Plakophilin 1</shortLabel>
+         <alias type="gene name" typeAc="MI:0301">B6P</alias>
+         <alias type="gene name" typeAc="MI:0301">Band-6-protein</alias>
+         <alias type="gene name" typeAc="MI:0301">Plakophilin 1 isoform 1b</alias>
+         <alias type="gene name" typeAc="MI:0301">Plakophilin 1 isoform 1a</alias>
+       </names>
+       <xref>
+         <primaryRef db="HPRD" dbAc="MI:0468" id="03579" refType="identity" refTypeAc="MI:0356"/>
+         <secondaryRef db="uniprot" dbAc="MI:0486" id="Q13835"/>
+         <secondaryRef db="entrezgene" dbAc="MI:0477" id="5317"/>
+         <secondaryRef db="omim" dbAc="MI:0480" id="601975"/>
+       </xref>
+       <interactorType>
+          <names>
+             <shortLabel>protein</shortLabel>
+             <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326"/>
+          </xref>
+       </interactorType>
+       <organism ncbiTaxId="40674">
+         <names>
+           <shortLabel>Mammalia</shortLabel>
+           <fullName>Mammalia</fullName>
+         </names>
+       </organism>
+       <sequence>
+mnhsplktal ayecfqdqdn stlalpsdqk mktgtsgrqr vqeqvmmtvk 
+rqkskssqss tlshsnrgsm ydgladnyny gttsrssyys kfqagngswg 
+ypiyngtlkr epdnrrfssy sqmenwsrhy prgscnttga gsdicfmqki 
+kasrsepdly cdprgtlrkg tlgskgqktt qnrysfystc sgqkaikkcp 
+vrppscaskq dpvyippisc nkdlsfghsr asskicsedi ecsgltipka 
+vqylssqdek yqaigayyiq htcfqdesak qqvyqlggic klvdllrspn 
+qnvqqaaaga lrnlvfrstt nkletrrqng ireavsllrr tgnaeiqkql 
+tgllwnlsst delkeeliad alpvladrvi ipfsgwcdgn snmsrevvdp 
+evffnatgcl rnlssadagr qtmrnysgli dslmayvqnc vaasrcddks 
+vencmcvlhn lsyrldaevp tryrqleyna rnayteksst gcfsnksdkm 
+mnnnydcplp eeetnpkgsg wlyhsdairt ylnlmgkskk datleacaga 
+lqnltaskgl mssgmsqlig lkekglpqia rllqsgnsdv vrsgasllsn 
+msrhpllhrv mgnqvfpevt rlltshtgnt snsedilssa cytvrnlmas 
+qpqlakqyfs ssmlnniinl crssaspkaa eaarlllsdm wsskelqgvl 
+rqqgfdrnml gtlaganslr nftsrf
+       </sequence>
+     </interactor>
+     <interactor id="04177">
+       <names>
+         <shortLabel>Plakophilin 2</shortLabel>
+         <alias type="gene name" typeAc="MI:0301">ARVD9</alias>
+         <alias type="gene name" typeAc="MI:0301">Plakophilin 2 isoform 2b</alias>
+         <alias type="gene name" typeAc="MI:0301">Plakophilin 2 isoform 2a</alias>
+       </names>
+       <xref>
+         <primaryRef db="HPRD" dbAc="MI:0468" id="04177" refType="identity" refTypeAc="MI:0356"/>
+         <secondaryRef db="uniprot" dbAc="MI:0486" id="Q99959"/>
+         <secondaryRef db="entrezgene" dbAc="MI:0477" id="5318"/>
+         <secondaryRef db="omim" dbAc="MI:0480" id="602861"/>
+       </xref>
+       <interactorType>
+          <names>
+             <shortLabel>protein</shortLabel>
+             <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326"/>
+          </xref>
+       </interactorType>
+       <organism ncbiTaxId="40674">
+         <names>
+           <shortLabel>Mammalia</shortLabel>
+           <fullName>Mammalia</fullName>
+         </names>
+       </organism>
+       <sequence>
+maapgapaey gyirtvlgqq ilgqldsssl alpseaklkl agssgrggqt 
+vkslriqeqv qqtlarkgrs svgngnlhrt ssvpeyvynl hlvendfvgg 
+rspvpktydm lkagttatye grwgrgtaqy ssqksveers lrhplrrlei 
+spdssperah ythsdyqysq rsqaghtlhh qesrraallv ppryarseiv 
+gvsragttsr qrhfdtyhrq yqhgsvsdtv fdsipanpal ltyprpgtsr 
+smgnlleken yltagltvgq vrplvplqpv tqnrasrssw hqssfhstrt 
+lreagpsvav dssgrrahlt vgqaaaggsg nllterstft dsqlgnadme 
+mtleravsml eadhmlpsri saaatfiqhe cfqksearkr vnqlrgilkl 
+lqllkvqned vqravcgalr nlvfedndnk levaelngvp rllqvlkqtr 
+dletkkqitg llwnlssndk lknlmiteal ltlteniiip fsgwpegdyp 
+kanglldfdi fynvtgclrn mssagadgrk amrrcdglid slvhyvrgti 
+adyqpddkat encvcilhnl syqleaelpe kysqniyiqn rniqtdnnks 
+igcfgsrsrk vkeqyqdvpm peeksnpkgv ewlwhsivir mylsliaksv 
+rnytqeaslg alqnltagsg pmptsvaqtv vqkesglqht rkmlhvgdps 
+vkktaisllr nlsrnlslqn eiaketlpdl vsiipdtvps tdlliettas 
+acytlnniiq nsyqnardll ntggiqkima isagdayasn kaskaasvll 
+yslwahtelh haykkaqfkk tdfvnsrtak ayhslkd
+       </sequence>
+     </interactor>
+     <interactor id="05732">
+       <names>
+         <shortLabel>Kallikrein 5</shortLabel>
+         <alias type="gene name" typeAc="MI:0301">Stratum corneum tryptic enzyme</alias>
+         <alias type="gene name" typeAc="MI:0301">SCTE</alias>
+         <alias type="gene name" typeAc="MI:0301">Kallikrein like 2</alias>
+         <alias type="gene name" typeAc="MI:0301">KLKL2</alias>
+       </names>
+       <xref>
+         <primaryRef db="HPRD" dbAc="MI:0468" id="05732" refType="identity" refTypeAc="MI:0356"/>
+         <secondaryRef db="uniprot" dbAc="MI:0486" id="Q9Y337"/>
+         <secondaryRef db="entrezgene" dbAc="MI:0477" id="25818"/>
+         <secondaryRef db="omim" dbAc="MI:0480" id="605643"/>
+       </xref>
+       <interactorType>
+          <names>
+             <shortLabel>protein</shortLabel>
+             <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326"/>
+          </xref>
+       </interactorType>
+       <organism ncbiTaxId="40674">
+         <names>
+           <shortLabel>Mammalia</shortLabel>
+           <fullName>Mammalia</fullName>
+         </names>
+       </organism>
+       <sequence>
+matarppwmw vlcalitall lgvtehvlan ndvscdhpsn tvpsgsnqdl 
+gagagedars ddsssriing sdcdmhtqpw qaalllrpnq lycgavlvhp 
+qwlltaahcr kkvfrvrlgh yslspvyesg qqmfqgvksi phpgyshpgh 
+sndlmlikln rrirptkdvr pinvsshcps agtkclvsgw gttkspqvhf 
+pkvlqclnis vlsqkrceda yprqiddtmf cagdkagrds cqgdsggpvv 
+cngslqglvs wgdypcarpn rpgvytnlck ftkwiqetiq ans
+       </sequence>
+     </interactor>
+     <interactor id="05711">
+       <names>
+         <shortLabel>Plakophilin 3</shortLabel>
+       </names>
+       <xref>
+         <primaryRef db="HPRD" dbAc="MI:0468" id="05711" refType="identity" refTypeAc="MI:0356"/>
+         <secondaryRef db="uniprot" dbAc="MI:0486" id="Q9Y446"/>
+         <secondaryRef db="entrezgene" dbAc="MI:0477" id="11187"/>
+         <secondaryRef db="omim" dbAc="MI:0480" id="605561"/>
+       </xref>
+       <interactorType>
+          <names>
+             <shortLabel>protein</shortLabel>
+             <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326"/>
+          </xref>
+       </interactorType>
+       <organism ncbiTaxId="9606">
+         <names>
+           <shortLabel>Human</shortLabel>
+           <fullName>Homo sapiens</fullName>
+         </names>
+       </organism>
+       <sequence>
+mqdgnfllsa lqpeagvcsl alpsdlqldr rgaegpeaer lraarvqeqv 
+rarllqlgqq prhngaaepe peaetargts rgqyhtlqag fssrsqglsg 
+dktsgfrpia kpayspasws srsavdlscs rrlssahngg safgaagygg 
+aqptppmptr pvsfherggv gsradydtls lrslrlgpgg lddryslvse 
+qlepaatsty rafayerqas ssssraggld wpeatevsps rtirapavrt 
+lqrfqsshrs rgvggavpga vlepvaraps vrslslslad sghlpdvhgf 
+nsygshrtlq rlssgfddid lpsavkylma sdpnlqvlga ayiqhkcysd 
+aaakkqarsl qavprlvklf nhanqevqrh atgamrnliy dnadnklalv 
+eengifellr tlreqddelr knvtgilwnl sssdhlkdrl ardtleqltd 
+lvlsplsgag gppliqqnas eaeifynatg flrnlssasq atrqkmrech 
+glvdalvtsi nhaldagkce dksvenavcv lrnlsyrlyd emppsalqrl 
+egrgrrdlag appgevvgcf tpqsrrlrel plaadaltfa evskdpkgle 
+wlwspqivgl ynrllqrcel nrhtteaaag alqnitagdr rwagvlsrla 
+leqerilnpl ldrvrtadhh qlrsltglir nlsrnarnkd emstkvvshl 
+ieklpgsvge ksppaevlvn iiavlnnlvv aspiaardll yfdglrklif 
+ikkkrdspds ekssraassl lanlwqynkl hrdfrakgyr kedflgp
+       </sequence>
+     </interactor>
+    </interactorList>
+    <interactionList>
+     <interaction id="0">
+       <experimentList>
+         <experimentRef>0</experimentRef>
+       </experimentList>
+       <participantList>
+           <participant id="0">
+              <interactorRef>00515</interactorRef>
+           </participant>
+           <participant id="1">
+              <interactorRef>00512</interactorRef>
+           </participant>
+       </participantList>
+     </interaction>
+     <interaction id="1">
+       <experimentList>
+         <experimentRef>1</experimentRef>
+         <experimentRef>2</experimentRef>
+       </experimentList>
+       <participantList>
+           <participant id="2">
+              <interactorRef>01414</interactorRef>
+           </participant>
+           <participant id="3">
+              <interactorRef>00515</interactorRef>
+           </participant>
+       </participantList>
+     </interaction>
+     <interaction id="2">
+       <experimentList>
+         <experimentRef>3</experimentRef>
+       </experimentList>
+       <participantList>
+           <participant id="4">
+              <interactorRef>03579</interactorRef>
+           </participant>
+           <participant id="5">
+              <interactorRef>00515</interactorRef>
+           </participant>
+       </participantList>
+     </interaction>
+     <interaction id="3">
+       <experimentList>
+         <experimentRef>4</experimentRef>
+         <experimentRef>5</experimentRef>
+       </experimentList>
+       <participantList>
+           <participant id="6">
+              <interactorRef>04177</interactorRef>
+           </participant>
+           <participant id="7">
+              <interactorRef>00515</interactorRef>
+           </participant>
+       </participantList>
+     </interaction>
+     <interaction id="4">
+       <experimentList>
+         <experimentRef>6</experimentRef>
+       </experimentList>
+       <participantList>
+           <participant id="8">
+              <interactorRef>05732</interactorRef>
+           </participant>
+           <participant id="9">
+              <interactorRef>00515</interactorRef>
+           </participant>
+       </participantList>
+     </interaction>
+     <interaction id="5">
+       <experimentList>
+         <experimentRef>7</experimentRef>
+         <experimentRef>8</experimentRef>
+       </experimentList>
+       <participantList>
+           <participant id="10">
+              <interactorRef>00515</interactorRef>
+           </participant>
+           <participant id="11">
+              <interactorRef>05711</interactorRef>
+           </participant>
+       </participantList>
+     </interaction>
+    </interactionList>
+  </entry>
+</entrySet>
