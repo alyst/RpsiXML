@@ -53,9 +53,9 @@ iListHandler <- function() {
         iList[[ curEL ]] <<- list()
         inI <<- TRUE
       }
-    else if (x == "experimentList") inEL <<- TRUE
-    else if (x == "experimentRef") inER <<- TRUE
-    else if (x == "participantList") inPL <<- TRUE
+    #else if (x == "experimentList") inEL <<- TRUE
+    #else if (x == "experimentRef") inER <<- TRUE
+    #else if (x == "participantList") inPL <<- TRUE
     else if (x == "proteinInteractorRef") 
       {
         curPIR <<- atts
@@ -65,11 +65,11 @@ iListHandler <- function() {
         inPIR <<- TRUE
       }
     else if (x == "role") inRole <<- TRUE
-    else if (x == "interactionType") inIT <<- TRUE
-    else if (x == "names") inNA <<- TRUE
-    else if (x == "shortLabel") inSL <<- TRUE
-    else if (x == "xref") inXR <<- TRUE
-    else if (x == "primaryRef") inPR <<- TRUE
+    #else if (x == "interactionType") inIT <<- TRUE
+    #else if (x == "names") inNA <<- TRUE
+    #else if (x == "shortLabel") inSL <<- TRUE
+    #else if (x == "xref") inXR <<- TRUE
+    #else if (x == "primaryRef") inPR <<- TRUE
   }
   endElement = function(x, ...) {
     if (x == "interaction") 
@@ -78,16 +78,16 @@ iListHandler <- function() {
         curEL <<- curEL + 1
         pairvec <<- c(pairvec,"")
       }
-    else if (x == "experimentList") inEL <<- FALSE
-    else if (x == "experimentRef") inER <<- FALSE
-    else if (x == "participantList") inPL <<- FALSE
-    else if (x == "proteinInteractorRef") inPIR <<- FALSE
+    #else if (x == "experimentList") inEL <<- FALSE
+    #else if (x == "experimentRef") inER <<- FALSE
+    #else if (x == "participantList") inPL <<- FALSE
+    #else if (x == "proteinInteractorRef") inPIR <<- FALSE
     else if (x == "role") inRole <<- FALSE
-    else if (x == "interactionType") inIT <<- FALSE
-    else if (x == "names") inNA <<- FALSE
-    else if (x == "shortLabel") inSL <<- FALSE
-    else if (x == "xref") inXR <<- FALSE
-    else if (x == "primaryRef") inPR <<- FALSE
+    #else if (x == "interactionType") inIT <<- FALSE
+    #else if (x == "names") inNA <<- FALSE
+    #else if (x == "shortLabel") inSL <<- FALSE
+    #else if (x == "xref") inXR <<- FALSE
+    #else if (x == "primaryRef") inPR <<- FALSE
   }
   text = function(x, atts, ...) {
     if (inRole)
