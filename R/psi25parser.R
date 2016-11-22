@@ -71,7 +71,7 @@ getValueByMatchingMatrixColumn <- function(x, matrix, nameCol, valueCol) {
   names <- matrix[,nameCol]
   ind <- match(x, names)
   if (length(ind) == 1 && is.na(ind)) {
-    value <- as.character(NA)
+    value <- NA_character_
   } else {
     value <- unlist(matrix[ind, valueCol])
   }

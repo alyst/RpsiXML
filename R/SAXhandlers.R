@@ -14,7 +14,7 @@
 null2na <- function (x) 
 {
   if (is.null(x) || length(x) == 0) 
-    x <- as.character(NA)
+    return(NA_character_)
   else x <- unique(unlist(x))
   x
 }
