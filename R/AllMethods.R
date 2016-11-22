@@ -319,6 +319,10 @@ setMethod("confidenceValue", "psimi25Interaction", function(x) {
    return(x@confidenceValue)
 })
 
+setMethod("isNegative", "psimi25Interaction", function(x) {
+  return(x@isNegative)
+})
+
 ### interactors
 setMethod("xref", "psimi25Interactor", function(object) {
   return(get("xref", object@xref))

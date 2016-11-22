@@ -130,7 +130,8 @@ setClass("psimi25Interaction",
                         prey = "character",
                         preyUniProt = "character",
                         inhibitor = "character",
-                        neutralComponent = "character"),
+                        neutralComponent = "character",
+                        isNegative = "logical"),
          contains=c("sourceDbAndId")
          )
 

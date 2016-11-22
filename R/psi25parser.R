@@ -174,15 +174,14 @@ parseXmlExperimentNodeSet <- function(nodes, psimi25source, namespaces, verbose)
   if(verbose)
     statusDisplay("  Parsing experiments: ")
   experimentEnv <- new.env(parent=emptyenv(), hash=TRUE)
-  experimentIds <- lapply(nodes, xmlGetAttr, name="id")
-  experiment <- lapply(nodes, parseXmlExperimentNode, namespaces=namespaces, sourceDb=sourceDb(psimi25source))
-
-  for(i in seq(along=experimentIds)) {
-    assign(experimentIds[[i]], experiment[[i]], envir=experimentEnv)
+  lapply(nodes, function(exp_node) {
+    exper <- parseXmlExperimentNode(exp_node, namespaces=namespaces, sourceDb=sourceDb(psimi25source))
+    assign(xmlGetAttr(exp_node, name="id"), exper)
     if(verbose) {
       statusDisplay(".")
     }
-  }
+    invisible()
+  })
   if(verbose)
     statusDisplay("\n")
   return(experimentEnv)
@@ -314,9 +313,13 @@ parseXmlInteractionNode <- function(node,
   }
   ## misc attributes
   ## confidence value
-  rolePath <-  "/ns:interaction/ns:confidenceList/ns:confidence/ns:value"
-  confidenceValue <- nonNullXMLvalueByPath(doc=subDoc,path = rolePath, namespaces=namespaces)
-  
+  confidenceValue <- nonNullXMLvalueByPath(doc=subDoc, namespaces=namespaces,
+                                           path = "/ns:interaction/ns:confidenceList/ns:confidence/ns:value")
+
+  isNegative <- XMLvalueByPath(doc=subDoc, namespaces=namespaces,
+                               path = "/ns:interaction/ns:negative")
+  isNegative <- !is.null(isNegative) && length(isNegative) == 1 && switch(isNegative, true = TRUE, false = FALSE, stop("Unknown <negative> value: ", isNegative))
+
   ## participant
   rolePath <- "/ns:interaction/ns:participantList/ns:participant/ns:interactorRef"
   participantRefs <- nonNullXMLvalueByPath(doc=subDoc, path=rolePath, namespaces=namespaces)
@@ -376,7 +379,8 @@ parseXmlInteractionNode <- function(node,
                      prey = preyRefs,
                      preyUniProt = preyUniprot,
                      inhibitor = inhibitorUniprot, 
-                     neutralComponent = neutralComponentUniprot
+                     neutralComponent = neutralComponentUniprot,
+                     isNegative = isNegative
                      )
   if(verbose)
     statusDisplay(".")    

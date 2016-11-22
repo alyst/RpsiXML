@@ -68,6 +68,7 @@ setGeneric("inhibitor", function(x,...) standardGeneric("inhibitor"))
 setGeneric("neutralComponent", function(x,...) standardGeneric("neutralComponent"))
 setGeneric("pubmedID", function(x,...) standardGeneric("pubmedID"))
 setGeneric("confidenceValue", function(x,...) standardGeneric("confidenceValue"))
+setGeneric("isNegative", function(x, ...) standardGeneric("isNegative"))
 
 setGeneric("revInciMat", function(x,...) standardGeneric("revInciMat"))
 
