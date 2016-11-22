@@ -674,6 +674,7 @@ parseXmlEntryNodeSet <- function(psimi25file, psimi25source, verbose=TRUE) {
 
 ## File parser: parsing file into interaction entries
 parsePsimi25Interaction <- function (psimi25file, psimi25source, verbose=TRUE) {
+  if (verbose) message("Parsing PSI-MI 2.5 interactions file \"", psimi25file, "\"")
   parsedEntry <- parseXmlEntryNodeSet(psimi25file, psimi25source, verbose=verbose)
   return(parsedEntry)
 }
@@ -681,6 +682,7 @@ parsePsimi25Interaction <- function (psimi25file, psimi25source, verbose=TRUE) {
 
 ## File parser: parsing file into complex
 parsePsimi25Complex <- function(psimi25file, psimi25source, verbose=FALSE) {
+  if (verbose) message("Parsing PSI-MI 2.5 complexes file \"", psimi25file, "\"")
   psiDoc <- xmlTreeParse(psimi25file, useInternalNodes=TRUE)
   psiNS <- xmlNamespaceDefinitions(psiDoc)
   namespaces <- c(ns=psiNS[[1]]$uri)
