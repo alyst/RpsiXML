@@ -644,16 +644,14 @@ parseXmlEntryNodeSet <- function(psimi25file, psimi25source, verbose=TRUE) {
 
   if(verbose)
     statusDisplay(paste(length(entry),"Entries found\n",sep=" "))
-    
-  entryCount <- length(nodes)
-  entryList <- list()
-  for(i in 1:entryCount) {
-    entryList[[i]] <- parseXmlEntryNode(doc=psimi25Doc, index=i,
-                                        namespaces=namespaces,
-                                        psimi25source=psimi25source,
-                                        verbose=verbose)
-  }
   
+  entryList <- lapply(seq_along(entry), function(i) {
+    parseXmlEntryNode(doc=psimi25Doc, index=i,
+                      namespaces=namespaces,
+                      psimi25source=psimi25source,
+                      verbose=verbose)
+  })
+
   free(psimi25Doc)
   if (length(entryList) > 1) {
     el <- new("psimi25InteractionEntry")
@@ -686,6 +684,13 @@ parsePsimi25Complex <- function(psimi25file, psimi25source, verbose=FALSE) {
   psiDoc <- xmlTreeParse(psimi25file, useInternalNodes=TRUE)
   psiNS <- xmlNamespaceDefinitions(psiDoc)
   namespaces <- c(ns=psiNS[[1]]$uri)
+
+  entry <- getNodeSet(psiDoc, "/ns:entrySet/ns:entry", namespaces)
+  if(verbose)
+    statusDisplay(paste(length(entry),"Entries found\n",sep=" "))
+  if (length(entry) != 1L)
+    stop("Internal RpsiXML Error: parsePsimi25Complex() does not support ", length(entry), " entries")
+
   basePath <- getEntryBasePath(1)
 
   releaseDate <- parseReleaseDate(doc=psiDoc,
