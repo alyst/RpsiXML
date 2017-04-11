@@ -178,7 +178,10 @@ setMethod("show", "psimi25Interaction", function(object) {
       "[ bait UniProt ]:", object@baitUniProt, "\n",
       "[ prey ]:", object@prey, "\n",
       "[ prey UniProt ]:", object@preyUniProt, "\n",
-      "[ confidence value ]:", confidenceValue(object), "\n"
+      "[ confidence value ]:", confidenceValue(object), "\n",
+      "[ negative ]:", isNegative(object), "\n",
+      "[ modeled ]:", isModeled(object), "\n",
+      "[ intraMolecular ]:", isIntraMolecular(object), "\n"
       )
 }
           )
@@ -321,6 +324,14 @@ setMethod("confidenceValue", "psimi25Interaction", function(x) {
 
 setMethod("isNegative", "psimi25Interaction", function(x) {
   return(x@isNegative)
+})
+
+setMethod("isModeled", "psimi25Interaction", function(x) {
+  return(x@isModeled)
+})
+
+setMethod("isIntraMolecular", "psimi25Interaction", function(x) {
+  return(x@isIntraMolecular)
 })
 
 ### interactors

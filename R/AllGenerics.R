@@ -69,6 +69,8 @@ setGeneric("neutralComponent", function(x,...) standardGeneric("neutralComponent
 setGeneric("pubmedID", function(x,...) standardGeneric("pubmedID"))
 setGeneric("confidenceValue", function(x,...) standardGeneric("confidenceValue"))
 setGeneric("isNegative", function(x, ...) standardGeneric("isNegative"))
+setGeneric("isModeled", function(x, ...) standardGeneric("isModeled"))
+setGeneric("isIntraMolecular", function(x, ...) standardGeneric("isIntraMolecular"))
 
 setGeneric("revInciMat", function(x,...) standardGeneric("revInciMat"))
 

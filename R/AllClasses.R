@@ -131,7 +131,9 @@ setClass("psimi25Interaction",
                         preyUniProt = "character",
                         inhibitor = "character",
                         neutralComponent = "character",
-                        isNegative = "logical"),
+                        isNegative = "logical",
+                        isModeled = "logical",
+                        isIntraMolecular = "logical"),
          contains=c("sourceDbAndId")
          )
 

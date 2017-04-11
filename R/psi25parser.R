@@ -319,6 +319,12 @@ parseXmlInteractionNode <- function(node,
   isNegative <- XMLvalueByPath(doc=subDoc, namespaces=namespaces,
                                path = "/ns:interaction/ns:negative")
   isNegative <- !is.null(isNegative) && length(isNegative) == 1 && switch(isNegative, true = TRUE, false = FALSE, stop("Unknown <negative> value: ", isNegative))
+  isModeled <- XMLvalueByPath(doc=subDoc, namespaces=namespaces,
+                               path = "/ns:interaction/ns:modeled")
+  isModeled <- !is.null(isModeled) && length(isModeled) == 1 && switch(isModeled, true = TRUE, false = FALSE, stop("Unknown <modeled> value: ", isModeled))
+  isIntraMolecular <- XMLvalueByPath(doc=subDoc, namespaces=namespaces,
+                               path = "/ns:interaction/ns:intraMolecular")
+  isIntraMolecular <- !is.null(isIntraMolecular) && length(isIntraMolecular) == 1 && switch(isIntraMolecular, true = TRUE, false = FALSE, stop("Unknown <intraMolecular> value: ", isIntraMolecular))
 
   ## participant
   rolePath <- "/ns:interaction/ns:participantList/ns:participant/ns:interactorRef"
@@ -380,7 +386,9 @@ parseXmlInteractionNode <- function(node,
                      preyUniProt = preyUniprot,
                      inhibitor = inhibitorUniprot, 
                      neutralComponent = neutralComponentUniprot,
-                     isNegative = isNegative
+                     isNegative = isNegative,
+                     isModeled = isModeled,
+                     isIntraMolecular = isIntraMolecular
                      )
   if(verbose)
     statusDisplay(".")    
