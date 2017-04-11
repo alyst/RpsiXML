@@ -174,14 +174,14 @@ parseXmlExperimentNodeSet <- function(nodes, psimi25source, namespaces, verbose)
   if(verbose)
     statusDisplay("  Parsing experiments: ")
   experimentEnv <- new.env(parent=emptyenv(), hash=TRUE)
-  lapply(nodes, function(exp_node) {
+  for (exp_node in nodes) {
     exper <- parseXmlExperimentNode(exp_node, namespaces=namespaces, sourceDb=sourceDb(psimi25source))
-    assign(xmlGetAttr(exp_node, name="id"), exper)
+    assign(xmlGetAttr(exp_node, name="id"), exper, envir = experimentEnv)
     if(verbose) {
       statusDisplay(".")
     }
     invisible()
-  })
+  }
   if(verbose)
     statusDisplay("\n")
   return(experimentEnv)
