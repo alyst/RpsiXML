@@ -160,6 +160,8 @@ setGeneric("inferredInteractionList", function(object) standardGeneric("inferred
 setGeneric("inferredInteractionList<-", function(object,value) standardGeneric("inferredInteractionList<-"))
 setGeneric("interactionType", function(object) standardGeneric("interactionType"))
 setGeneric("interactionType<-", function(object, value) standardGeneric("interactionType<-"))
+setGeneric("interactionDetectionMethod", function(object) standardGeneric("interactionDetectionMethod"))
+setGeneric("interactionDetectionMethod<-", function(object, value) standardGeneric("interactionDetectionMethod<-"))
 setGeneric("modelled", function(object) standardGeneric("modelled"))
 setGeneric("modelled<-", function(object,value) standardGeneric("modelled<-"))
 setGeneric("intraMolecular", function(object) standardGeneric("intraMolecular"))

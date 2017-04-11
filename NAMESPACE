@@ -49,6 +49,7 @@ exportMethods("abstract",
               "translateID",
               "interactorInfo",
               "interactionType",
+              "interactionDetectionMethod",
               "complexes",
               "uniprot",
               "revInciMat"

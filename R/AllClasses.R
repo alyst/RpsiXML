@@ -85,7 +85,7 @@ setClass("psimi25Feature",
 
 ## psimi25 experiment
 setClass("psimi25Experiment",
-         representation(interactionType = "character",
+         representation(interactionDetectionMethod = "character",
                         expPubMed = "character"),
          contains=c("sourceDbAndId")
          )
@@ -121,6 +121,7 @@ setClass("psimi25Participant",
 ## psimi25 interaction, roughly matching the 'interactionElementType'
 setClass("psimi25Interaction",
          representation(interactionType = "character",
+                        interactionDetectionMethod = "character",
                         expPubMed = "character",
                         sourceId = "character",
                         confidenceValue = "character",

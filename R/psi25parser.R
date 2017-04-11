@@ -122,12 +122,12 @@ parseXmlAttributesListByPath <- function(doc,
 ##----------------------------------------##
 parseXmlExperimentNode <- function(root, namespaces, sourceDb) {
   subDoc <- xmlDoc(root)
-  interactionType <- nonNullXMLvalueByPath(doc = subDoc,
+  interactionDetectionMethod <- nonNullXMLvalueByPath(doc = subDoc,
                                            path = "/ns:experimentDescription/ns:interactionDetectionMethod/ns:names/ns:shortLabel",
                                            namespaces = namespaces)
   
-  if(isLengthOneAndNA(interactionType)) {
-    interactionType <- nonNullXMLvalueByPath(doc = subDoc,
+  if(isLengthOneAndNA(interactionDetectionMethod)) {
+    interactionDetectionMethod <- nonNullXMLvalueByPath(doc = subDoc,
                                              path = "/ns:experimentDescription/ns:interactionDetectionMethod/ns:names/ns:fullName",
                                              namespaces = namespaces)
   }
@@ -155,7 +155,7 @@ parseXmlExperimentNode <- function(root, namespaces, sourceDb) {
   free(subDoc)
   experiment <- new("psimi25Experiment",
                     sourceDb = sourceDb,
-                    interactionType = interactionType,
+                    interactionDetectionMethod = interactionDetectionMethod,
                     sourceId = sourceId,
                     expPubMed = expPubMed)
   return(experiment)
@@ -289,16 +289,16 @@ parseXmlInteractionNode <- function(node,
   
   if ((!is.null(expRef)) && exists(expRef, envir = expEnv)) {
     expData <- get(expRef, envir = expEnv)
-    interactionType <- expData@interactionType
+    interactionDetectionMethod <- expData@interactionDetectionMethod
     expPsimi25 <- expData@sourceId
     expPubMed <- expData@expPubMed
   }
   else {
-    interactionType <- nonNullXMLvalueByPath(doc = subDoc,
+    interactionDetectionMethod <- nonNullXMLvalueByPath(doc = subDoc,
                                              path = "/ns:interaction/ns:experimentList/ns:experimentDescription/ns:interactionDetectionMethod/ns:names/ns:shortLabel",
                                              namespaces = namespaces)[[1]]
-    if(isLengthOneAndNA(interactionType)) {
-      interactionType <- nonNullXMLvalueByPath(doc = subDoc,
+    if(isLengthOneAndNA(interactionDetectionMethod)) {
+      interactionDetectionMethod <- nonNullXMLvalueByPath(doc = subDoc,
                                                path = "/ns:interaction/ns:experimentList/ns:experimentDescription/ns:interactionDetectionMethod/ns:names/ns:fullName",
                                                namespaces = namespaces)[[1]]
     }
@@ -311,6 +311,9 @@ parseXmlInteractionNode <- function(node,
                                                 name = "id",
                                                 namespaces = namespaces)[[1]]
   }
+  interactionType <- nonNullXMLvalueByPath(doc = subDoc,
+                                           path = "/ns:interaction/ns:interactionType/ns:names/ns:shortLabel",
+                                           namespaces = namespaces)[[1]]
   ## misc attributes
   ## confidence value
   confidenceValue <- nonNullXMLvalueByPath(doc=subDoc, namespaces=namespaces,
@@ -375,7 +378,8 @@ parseXmlInteractionNode <- function(node,
   interaction <- new("psimi25Interaction",
                      sourceDb = sourceDb,
                      sourceId = as.character(psimi25Id), ## FIXME: can we do it nullable?
-                     interactionType = interactionType, 
+                     interactionType = interactionType,
+                     interactionDetectionMethod = interactionDetectionMethod,
                      expPubMed = expPubMed,
                      ##expSourceId = expPsimi25, 
                      confidenceValue = confidenceValue,
@@ -880,15 +884,15 @@ separateXMLDataByExpt <- function(xmlFiles, psimi25source, type = "direct", dire
   }
 
   if(type == "direct"){
-    interactionTypeWanted = c("two hybrid","two hybrid array", 
+    interactionDetectionMethodWanted = c("two hybrid","two hybrid array", 
                                "2h fragment pooling", "2 hybrid",
                                "two hybrid pooling", "Two-hybrid")}
   if(type == "indirect"){
-    interactionTypeWanted = c("coip","anti tag coip","pull down","tap",
+    interactionDetectionMethodWanted = c("coip","anti tag coip","pull down","tap",
         "anti bait coip","affinity chrom","chromatography","ion exchange chrom"
         ,"affinity techniques")}
   if(type == "eg"){
-    interactionTypeWanted = c("spr")}
+    interactionDetectionMethodWanted = c("spr")}
   
   #create a list of psimi25interaction objects corresponding to the list of xml files
   ie <- lapply(xmlFiles, parsePsimi25Interaction, psimi25source,...)
@@ -900,7 +904,7 @@ separateXMLDataByExpt <- function(xmlFiles, psimi25source, type = "direct", dire
   protId <- unique(names(combinedList))
   uniqueCombList <- combinedList[protId]
 
-  psiM <- lapply(ie, function(x){getDesired(x,interactionTypeWanted)})
+  psiM <- lapply(ie, function(x){getDesired(x,interactionDetectionMethodWanted)})
 
   #now we have a kx3 matrix that has (bait,prey,pmid) info for all xml files
   psi <- do.call(rbind, psiM)
@@ -948,15 +952,17 @@ separateXMLDataByExpt <- function(xmlFiles, psimi25source, type = "direct", dire
   ###this works for intact, need to test on all other databases!!!
 }
 
-getDesired <- function(interactionEntry, intType){
+getDesired <- function(interactionEntry, intDetMethod, intType = NULL){
 
   x <- interactions(interactionEntry)
   
   dataL <- lapply(x, function(y){
-    if(any(y@interactionType %in% intType)) {
-      z <- c(bait(y), prey(y), pubmedID(y), interactionType(y));
+    if((is.null(intDetMethod) || any(y@interactionDetectionMethod %in% intDetMethod)) &&
+       (is.null(intType) || any(y@interactionType %in% intType))
+    ) {
+      z <- c(bait(y), prey(y), pubmedID(y), interactionType(y), interactionDetectionMethod(y));
       
-      if(length(z)==4){
+      if(length(z)==5){
         if(!(is.na(z[1])) && !(is.na(z[2]))) {
           return(z)
         } else {
@@ -974,12 +980,13 @@ getDesired <- function(interactionEntry, intType){
         }
         
         nrow <- length(bs)*length(ps)
-        bpm <- matrix(nrow=nrow, ncol=4)
+        bpm <- matrix(nrow=nrow, ncol=5)
         
         bpm[,1] <- rep(bs, each=length(ps));
         bpm[,2] <- rep(ps, length(bs))
         bpm[,3] <- rep(pubmedID(y), nrow);
         bpm[,4] <- rep(interactionType(y), nrow);
+        bpm[,5] <- rep(interactionDetectionMethod(y), nrow);
         return(bpm)}
     }
   }
@@ -988,7 +995,7 @@ getDesired <- function(interactionEntry, intType){
   dataL <- dataL[!(sapply(dataL, is.null))]
   if(length(dataL)>0){
     dataM <- do.call(rbind, dataL)
-    colnames(dataM) <- c("Bait","Prey","PMID", "Interaction Type")
+    colnames(dataM) <- c("Bait","Prey","PMID","Interaction Type","Interaction Detection Method")
     return(dataM)
   } else {
     return(NULL)

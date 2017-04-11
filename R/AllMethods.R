@@ -172,6 +172,7 @@ setMethod("show", "psimi25Interaction", function(object) {
       "[ source database ]:", object@sourceDb, "\n",
       "[ source experiment ID ]:", object@sourceId, "\n",
       "[ interaction type ]:", object@interactionType, "\n",
+      "[ interaction detection method ]:", object@interactionDetectionMethod, "\n",
       "[ experiment ]: pubmed", object@expPubMed, "\n",
       "[ participant ]:", object@participant, "\n",
       "[ bait ]:", object@bait, "\n",
@@ -479,6 +480,8 @@ setMethod("pubmedID", "psimi25Interaction", function(x) {
 setMethod("interactionType", signature(object="psimi25Interaction"),
           function(object) object@interactionType)
 
+setMethod("interactionDetectionMethod", signature(object="psimi25Interaction"),
+          function(object) object@interactionDetectionMethod)
 
 setMethod("numInteractions", signature(x="psimi25InteractionEntry"), function(x) {
   xit <- interactions(x)
