@@ -89,7 +89,7 @@ export(parsePsimi25Interaction,
        pubmedID,
        null2na, 
        getAbstractByPMID,
-       xref
+       xrefs
        )
 
 ## complex 

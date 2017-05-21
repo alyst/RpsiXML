@@ -52,7 +52,7 @@ intactXrefs <- xrefDbs(intactSet)
 intactXrefIns <- xrefDbs(intactSet, intersect=TRUE)
 
 intactSetInteractors <- interactors(intactSet)
-intactXrefExample <- xref(intactSetInteractors[[1]])
+intactXrefExample <- xrefs(intactSetInteractors[[1]])
 translateID(intactSetInteractors,"intact")
 translateID(intactSetInteractors[[1]],"intact")
 

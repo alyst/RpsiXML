@@ -240,7 +240,7 @@ parseXmlInteractorNode <- function(root, namespaces, sourceDb, uniprotsymbol) {
                     uniprotId = uniprot,
                     organismName = organismNames,
                     taxId = taxIds,
-                    xref = xrefEnv
+                    xrefs = xrefEnv
                     )
   return(interactor)
 }

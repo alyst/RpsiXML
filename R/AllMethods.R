@@ -163,7 +163,7 @@ setMethod("show", "psimi25Interactor", function(object) {
       "[ UniProt ID ]: ", object@uniprotId, "\n",
       "[ organism ]: ", paste(object@organismName, collapse=", "), "\n",
       "[ NCBI Taxonomy ID ]: ", object@taxId, "\n",
-      "[ xref ]: ",nrow(xref(object)),"xrefs found, Use 'xref(x)' to see more annotation\n")
+      "[ xrefs ]: ",nrow(xrefs(object)),"xrefs found, Use 'xrefs(x)' to see more annotation\n")
 })
 
 setMethod("show", "psimi25Interaction", function(object) {
@@ -336,13 +336,12 @@ setMethod("isIntraMolecular", "psimi25Interaction", function(x) {
 })
 
 ### interactors
-setMethod("xref", "psimi25Interactor", function(object) {
-  return(get("xref", object@xref))
+setMethod("xrefs", "psimi25Interactor", function(object) {
+  return(get("xrefs", object@xrefs))
 })
 setMethod("xrefDbs", signature(x="psimi25Interactor"),
           function(x) {
-            xrefs <- xref(x)
-            unique(unlist(xrefs[,"db"]))
+            unique(unlist(xrefs(x)[,"db"]))
           })
 setMethod("xrefDbs", signature(x="list"),
           function(x, intersect=FALSE) {
