@@ -41,7 +41,7 @@ exportMethods("interactors",
 exportMethods("releaseDate")
 
 exportMethods("abstract",
-              "availableXrefs",
+              "xrefDbs",
               "edgeLabel",
               "hyperedgeNodes",
               "show",

@@ -44,12 +44,12 @@ inhibitor(intactTestInteraction)
 neutralComponent(intactTestInteraction)
 pubmedID(intactTestInteraction)
 intactTestInteractor <- interactors(intactSet)[[1]]
-availableXrefs(intactTestInteractor)
+xrefDbs(intactTestInteractor)
 
 ## which cross references does the set provide?
-intactXrefs <- availableXrefs(intactSet)
+intactXrefs <- xrefDbs(intactSet)
 ## which references exist for every interactor?
-intactXrefIns <- availableXrefs(intactSet, intersect=TRUE)
+intactXrefIns <- xrefDbs(intactSet, intersect=TRUE)
 
 intactSetInteractors <- interactors(intactSet)
 intactXrefExample <- xref(intactSetInteractors[[1]])

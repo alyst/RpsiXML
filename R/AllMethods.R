@@ -289,7 +289,7 @@ setMethod("translateID", signature(r="list"),
               stop("'x' must be a list of psimi25Interactor objects!")
             }
             ## all available dbs
-            ALLDB <- toupper(unique(unlist(sapply(r, availableXrefs))))
+            ALLDB <- toupper(unique(unlist(sapply(r, xrefDbs))))
             TO <- toupper(to)
             if (!any(ALLDB %in% TO)) {
               stop(sprintf("%s not available! available xrefs are: %s\n",
@@ -339,32 +339,30 @@ setMethod("isIntraMolecular", "psimi25Interaction", function(x) {
 setMethod("xref", "psimi25Interactor", function(object) {
   return(get("xref", object@xref))
 })
-setMethod("availableXrefs", signature(x="psimi25Interactor"),
+setMethod("xrefDbs", signature(x="psimi25Interactor"),
           function(x) {
             xrefs <- xref(x)
             unique(unlist(xrefs[,"db"]))
           })
-setMethod("availableXrefs", signature(x="list"),
+setMethod("xrefDbs", signature(x="list"),
           function(x, intersect=FALSE) {
             isClass <- all(sapply(x, inherits, "psimi25Interactor"))
             if(!isClass) {
               stop("'x' must be a list of 'psimi25Interactor' objects!")
             }
-            xrefs <- lapply(x, availableXrefs)
-            uXrefs <- unique(unlist(xrefs))
+            xrefs <- lapply(x, xrefDbs)
+            nxrefs <- table(xrefs)
             if(!intersect) {
-              return(uXrefs)
+              return(names(nxrefs))
             } else {
-              mat <- sapply(xrefs,function(x) uXrefs %in% x)
-              uXrefEverywhere <- apply(mat, 1, all)
-              return(uXrefs[uXrefEverywhere])
+              return(names(nxrefs)[nxrefs==length(x)])
             }
           })
-setMethod("availableXrefs",
+setMethod("xrefDbs",
           signature(x="psimi25InteractionEntry"),
           function(x,...) {
             ints <- interactors(x)
-            return(availableXrefs(ints, ...))
+            return(xrefDbs(ints, ...))
           })
 
 

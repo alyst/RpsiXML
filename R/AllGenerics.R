@@ -30,7 +30,7 @@ setGeneric("releaseDate<-", function(x, value) standardGeneric("releaseDate<-"))
 
 setGeneric("uniqueIdentifierSymbol", function(x) standardGeneric("uniqueIdentifierSymbol"))
            
-setGeneric("availableXrefs", function(x,...) standardGeneric("availableXrefs"))
+setGeneric("xrefDbs", function(x,...) standardGeneric("xrefDbs"))
 setGeneric("translateID", function(r, ...) standardGeneric("translateID"))
 
 
