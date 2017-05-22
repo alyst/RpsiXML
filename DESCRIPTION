@@ -13,6 +13,8 @@ Collate: AllClasses.R
 	 SAXhandlers.R
 	 funcsAnnotation.R
 	 hyperGraphs.R
+	 misc.R
+	 XMLutils.R
 	 psi25parser.R
 	 psimi25Source.R
 	 validatePSIMI25.R
