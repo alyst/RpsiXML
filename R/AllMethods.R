@@ -304,17 +304,11 @@ setMethod("translateID",
           signature(r="psimi25Interactor"),
           function(r, to) {
             if(missing(to)) {
-              to <- "sourceId"
+              matchingRefs <- subset(xrefs(r), kind=="primaryRef")
+            } else {
+              matchingRefs <- subset(xrefs(r), grep(toupper(to), toupper(db)))
             }
-            TO <- toupper(to)
-            xrefs <- xref(r)
-            xrefDB <- toupper(xrefs[,"db"])
-            xrefid <- xrefs[,"id"]
-
-            isTo <- grep(TO,xrefDB)
-            newID <- unlist(xrefs[isTo,"id"])
-            
-            return(null2na(newID))
+            return(null2na(matchingRefs$id))
           })
 
 
@@ -341,7 +335,7 @@ setMethod("xrefs", "psimi25Interactor", function(object) {
 })
 setMethod("xrefDbs", signature(x="psimi25Interactor"),
           function(x) {
-            unique(unlist(xrefs(x)[,"db"]))
+            unique(xrefs(x)$db)
           })
 setMethod("xrefDbs", signature(x="list"),
           function(x, intersect=FALSE) {

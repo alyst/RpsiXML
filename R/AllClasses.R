@@ -142,7 +142,7 @@ setClass("psimi25Interaction",
 setClass("psimi25Interactor",
          representation(shortLabel = "character",
                         uniprotId = "character",
-                        xrefs = "environment"),
+                        xrefs = "data.frame"),
          contains=c("sourceDbAndId", "organismTaxIdAndName")
          )
 

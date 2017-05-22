@@ -96,37 +96,38 @@ parseXmlInteractorNode <- function(root, namespaces, sourceDb, uniprotsymbol) {
                                            path = "/ns:interactor/ns:organism",
                                            name = "ncbiTaxId",
                                            namespaces = namespaces)
-  
-  uniprot <- nonNullXMLattributeValueByPath(doc = subDoc,
-                                            path = sprintf("/ns:interactor/ns:xref/ns:primaryRef[@db='%s']|/ns:interactor/ns:xref/ns:secondaryRef[@db='%s']",uniprotsymbol, uniprotsymbol),
-                                            name = "id",
-                                            namespaces=namespaces)[1]
-  xrefDb <- XMLattributeValueByPath(doc = subDoc,
-                                           path = "/ns:interactor/ns:xref/ns:primaryRef|/ns:interactor/ns:xref/ns:secondaryRef",
-                                           name = "db",
-                                           namespaces = namespaces)
-  xrefId <- XMLattributeValueByPath(doc = subDoc,
-                                           path = "/ns:interactor/ns:xref/ns:primaryRef|/ns:interactor/ns:xref/ns:secondaryRef",
-                                           name = "id",
-                                           namespaces = namespaces)
-  
-  sourceIdMat <- cbind("sourceId", sourceIds)
-  
-  tempMat <- matrix(c(xrefDb, xrefId), ncol=2, byrow=FALSE)
-  xrefMat <- rbind(sourceIdMat, tempMat)
-  colnames(xrefMat) <- c("db","id")
-  xrefEnv <- new.env()
-  xref <- assign("xref",xrefMat, envir=xrefEnv) 
-                     
+  xrefNodeSet <- getNodeSet(doc = subDoc,
+                            path = "/ns:interactor/ns:xref/ns:primaryRef|/ns:interactor/ns:xref/ns:secondaryRef",
+                            namespaces = namespaces)
+  xrefs_df <- data.frame(
+    kind = sapply(xrefNodeSet, xmlName),
+    db = sapply(sapply(xrefNodeSet, xmlGetAttr, "db"), null2na),
+    refType = sapply(sapply(xrefNodeSet, xmlGetAttr, "refType"), null2na),
+    id = sapply(sapply(xrefNodeSet, xmlGetAttr, "id"), null2na),
+    stringsAsFactors = FALSE
+  )
+
+  sourceRef <- subset(xrefs_df, db == sourceDb & refType == "identity")
+  if (nrow(sourceRef) > 1L && "primaryRef" %in% sourceRef$kind) {
+    sourceRef <- subset(sourceRef, kind=="primaryRef")
+  }
+  if (nrow(sourceRef) > 1L) { sourceRef <- sourceRef[1:1, ] }
+
+  uniprotRef <- subset(xrefs_df, db == uniprotsymbol & refType == "identity")
+  if (nrow(uniprotRef) > 1L && "primaryRef" %in% uniprotRef$kind) {
+    uniprotRef <- subset(uniprotRef, kind=="primaryRef")
+  }
+  if (nrow(uniprotRef) > 1L) { uniprotRef <- uniprotRef[1:1, ] }
+
   free(subDoc)
   interactor <- new("psimi25Interactor",
                     sourceDb = sourceDb,
                     sourceId = sourceIds,
                     shortLabel = shortLabels,
-                    uniprotId = uniprot,
+                    uniprotId = uniprotRef$id,
                     organismName = organismNames,
                     taxId = taxIds,
-                    xrefs = xrefEnv
+                    xrefs = xrefs_df
                     )
   return(interactor)
 }
