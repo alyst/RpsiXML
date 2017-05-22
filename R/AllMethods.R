@@ -210,8 +210,8 @@ setMethod("show","psimi25Complex", function(object) {
             "[ organism ]: ", paste(object@organismName, collapse=", "), "\n",
             "[ taxonomy ID ]: ", object@taxId, "\n",sep=""))
   showListWithoutNames(attributesList(object), title="[ attributesList ]:")
-  cat("[ members ]: \n")
-  print(object@members)
+  cat("[ participants ]: \n")
+  print(object@participants)
 })
 
 setMethod("show", "psimi25ComplexEntry", function(object) {
@@ -403,11 +403,11 @@ setMethod("complexes", signature(x="psimi25ComplexEntry"),
           function(x) x@complexes)
 
 
-setMethod("members", "psimi25Complex", function(x) {
-  return(x@members)
+setMethod("participants", "psimi25Complex", function(x) {
+  return(x@participants)
 })
-setReplaceMethod("members", c("psimi25Complex","data.frame"), function(x,value) {
-  x@members <- value
+setReplaceMethod("participants", c("psimi25Complex","data.frame"), function(x,value) {
+  x@participants <- value
   return(x)
 })
 setMethod("interactorRef", "psimi25Complex", function(x) {

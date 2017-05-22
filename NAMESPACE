@@ -77,7 +77,6 @@ export(parsePsimi25Interaction,
        hyperGraphConverter,
        psimi25Hypergraph2GraphNEL,
        ## interaction accessors,
-       participants,
        bait,
        prey,
        confidenceValue,
@@ -93,7 +92,7 @@ export(parsePsimi25Interaction,
 ## complex 
 export(complexName,
        attributesList,
-       members)
+       participants)
 
        
 ## validate

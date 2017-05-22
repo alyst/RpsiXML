@@ -35,8 +35,8 @@ setGeneric("translateID", function(r, ...) standardGeneric("translateID"))
 
 
 setGeneric("complexes", function(x) standardGeneric("complexes"))
-setGeneric("members", function(x) standardGeneric("members"))
-setGeneric("members<-", function(x,value) standardGeneric("members<-"))
+setGeneric("participants", function(x) standardGeneric("participants"))
+setGeneric("participants<-", function(x,value) standardGeneric("participants<-"))
 setGeneric("shortLabel", function(x) standardGeneric("shortLabel"))
 setGeneric("shortLabel<-", function(x,value) standardGeneric("shortLabel<-"))
 setGeneric("fullName", function(x) standardGeneric("fullName"))

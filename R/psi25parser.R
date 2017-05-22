@@ -351,7 +351,7 @@ annotateComplexesWithInteractors <- function(complexes,
     
     taxId(thisComplex) <- thisTaxid
     organismName(thisComplex) <- thisOrganism
-    members(thisComplex) <- participants
+    participants(thisComplex) <- participants
     complexes[[i]] <- thisComplex
   }
 
