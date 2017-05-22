@@ -287,8 +287,14 @@ parseXmlComplexNode <- function(node,
 
   subDoc <- xmlDoc(node)
   sourcedb <- sourceDb(psimi25source)
+  # file-local complex id
+  localId <- nonNullXMLattributeValueByPath(doc=subDoc,
+                                            path="/ns:interaction",
+                                            name="id",
+                                            namespaces=namespaces)
   sourceId <- nonNullXMLattributeValueByPath(doc=subDoc,
-                                             path=paste("/ns:interaction/ns:xref/ns:primaryRef[@db='",sourcedb,"']",sep=""),
+                                             path=paste0("/ns:interaction/ns:xref/ns:primaryRef[@db='",sourcedb,"']|",
+                                                         "/ns:interaction/ns:xref/ns:secondaryRef[@db='",sourcedb,"' and @refType='identity']"),
                                              name="id",
                                              namespaces=namespaces)
 
@@ -300,13 +306,27 @@ parseXmlComplexNode <- function(node,
                                     path="/ns:interaction/ns:names/ns:fullName",
                                     namespaces=namespaces)
 
-  interactorRef <- nonNullXMLvalueByPath(doc=subDoc,
-                                         path="/ns:interaction/ns:participantList/ns:participant/ns:interactorRef",
-                                         namespaces=namespaces)
-  if(isEmptyNodeSet(interactorRef)) {
-    interactorRef <- nonNullXMLattributeValueByPath(doc=subDoc,
-                                                      path="/ns:interaction/ns:participantList/ns:participant/ns:interactor",
-                                                      name="id", namespaces=namespaces)
+  participantNodeSet <- getNodeSet(doc=subDoc,
+                                   path="/ns:interaction/ns:participantList/ns:participant",
+                                   namespaces=namespaces)
+  participants <- data.frame(
+    id = sapply(participantNodeSet, xmlGetAttr, name="id"),
+    stringsAsFactors = FALSE
+  )
+  if(nrow(participants) > 0) {
+    if (length(getNodeSet(participantNodeSet[[1]], "./ns:interactor", namespaces)) > 0L) {
+      # CORUM complexes have interactors embedded
+      interactorsNodeSet <- getNodeSet(subDoc, "/ns:interaction/ns:participantList/ns:participant/ns:interactor", namespaces)
+      interactors <- parseXmlInteractorNodeSet(interactorsNodeSet,
+                                               psimi25source=psimi25source,
+                                               namespaces=namespaces, verbose=FALSE)
+      participants$interactorRef <- sapply(interactorsNodeSet, xmlGetAttr, name = "id")
+    } else {
+      # IntAct has references to interactors
+      participants$interactorRef <- sapply(participantNodeSet, nonNullXMLvalueByPath,
+                                           path="./ns:interactorRef", namespaces=namespaces)
+      interactors <- NULL
+    }
   }
 
   attributesList <- parseXmlAttributesListByPath(doc=subDoc,
@@ -319,43 +339,30 @@ parseXmlComplexNode <- function(node,
                  sourceId=sourceId,
                  shortLabel=shortLabel,
                  fullName=fullName,
-                 interactorRef=interactorRef,
+                 participants=participants,
                  attributesList=attributesList)
+  if (!is.null(interactors)) {
+    interactorsInfo <- interactorInfo(interactors)
+    complex <- annotateComplexWithInteractors(complex, interactorsInfo)
+  }
   return(complex)
-
 }
 
-annotateComplexesWithInteractors <- function(complexes,
-                                              interactors) {
-  interactorIds <- sapply(interactors, sourceId)
-  interactorInfo <- interactorInfo(interactors)
-
-  for(i in seq(along=complexes)) {
-    thisComplex <- complexes[[i]]
-    thisNodeInteractorIds <- interactorRef(thisComplex)
-    participantRef <- split(thisNodeInteractorIds, 
-                            as.factor(thisNodeInteractorIds))
-    multiplicity <- sapply(participantRef, length)
-    if ( !all(names(participantRef) %in% interactorIds) ) {
-      msg <- paste("parse complex ", shortLabel(thisComplex), 
-                   "can't resolve all interactor references.")
-      stop(msg)
-    }	
-    participantIndex <- interactorIds %in% names(participantRef)
-    participants <- interactorInfo[participantIndex, "sourceId"];
-    participantsUniProt <- interactorInfo[participantIndex, "uniprotId"];
-    names(participants) <- as.character(participants)
-    participants <- data.frame(sourceId=participants, uniprotId = participantsUniProt, multiplicity=multiplicity)
-    thisOrganism <- unique(as.character(interactorInfo[participantIndex,"organismName"]))
-    thisTaxid <- unique(as.character(interactorInfo[participantIndex, "taxId"]))
-    
-    taxId(thisComplex) <- thisTaxid
-    organismName(thisComplex) <- thisOrganism
-    participants(thisComplex) <- participants
-    complexes[[i]] <- thisComplex
+annotateComplexWithInteractors <- function(complex,
+                                           interactorsInfo) {
+  participants <- merge(participants(complex), interactorsInfo,
+                        by.x="interactorRef", by.y="localId",
+                        all.x=TRUE, all.y=FALSE,
+                        sort=FALSE)
+  if (anyNA(participants$uniprotId)) {
+    warning("complex ", shortLabel(complex), ": ",
+            "can't resolve uniprot ACs for all interactor references (ids: ",
+            paste0(participants$interactorRef[is.na(participants$uniprotId)], collapse=" "), ")")
   }
-
-  return(complexes)
+  organismName(complex) <- unique(as.character(participants$organismName))
+  taxId(complex) <- unique(as.character(participants$taxId))
+  participants(complex) <- participants
+  return(complex)
 }
   
 ##----------------------------------------##
@@ -549,16 +556,22 @@ parsePsimi25Complex <- function(psimi25file, psimi25source, verbose=FALSE) {
                         psimi25source=psimi25source)
   })
   if (verbose) {statusDisplay("\n")}
-  annotatedComplexList <- annotateComplexesWithInteractors(complexes=complexList,
-                                                           interactors=interactors)
-  
-  if(verbose)
-    statusDisplay("\n")
+  if (length(interactors) > 0L) {
+    if (verbose) {statusDisplay("  Annotating complexes with interactors:\n")}
+    interactorsInfo <- interactorInfo(interactors)
+    complexList <- lapply(seq_along(complexList), function(cplxIx) {
+      if (verbose) {statusIndicator(cplxIx, complexCount)}
+      annotateComplexWithInteractors(complexList[[cplxIx]], interactorsInfo)
+    })
+    if (verbose) {statusDisplay("\n")}
+  }
+  # else complexes should be already annotated with interactors
+
   free(psiDoc)
   
   new("psimi25ComplexEntry",
       interactors=interactors,
-      complexes=annotatedComplexList,
+      complexes=complexList,
       releaseDate=releaseDate)
 }
 

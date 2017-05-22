@@ -152,8 +152,7 @@ setClass("psimi25ComplexEntry",
 setClass("psimi25Complex",
          representation(shortLabel = "character",
                         fullName = "character",
-                        participants = "data.frame",
-                        interactorRef="character"
+                        participants = "data.frame"
                         ),
          contains=c("sourceDbAndId", "organismTaxIdAndName", "attributesListBase")
          )

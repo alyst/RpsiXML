@@ -410,10 +410,7 @@ setReplaceMethod("participants", c("psimi25Complex","data.frame"), function(x,va
   x@participants <- value
   return(x)
 })
-setMethod("interactorRef", "psimi25Complex", function(x) {
-  return(x@interactorRef)
-})
-          
+
 ## TODO: refactor to psimi25Names
 setMethod("shortLabel", "psimi25Complex", function(x) {
   return(x@shortLabel)
