@@ -305,7 +305,20 @@ parseXmlComplexNode <- function(node,
   fullName <- nonNullXMLvalueByPath(doc=subDoc,
                                     path="/ns:interaction/ns:names/ns:fullName",
                                     namespaces=namespaces)
-
+  if (is.na(fullName)) {
+    fullName <- nonNullXMLvalueByPath(doc=subDoc,
+                                      path="/ns:interaction/ns:names/ns:alias[@type='complex recommended name']",
+                                      namespaces=namespaces)
+  }
+  if (is.na(fullName)) { # take the first synonym
+    fullName <- nonNullXMLvalueByPath(doc=subDoc,
+                                      path="/ns:interaction/ns:names/ns:alias[@type='complex synonym']",
+                                      namespaces=namespaces)
+    if (length(fullName) > 1L) {
+      fullName <- fullName[[1L]]
+    }
+  }
+  
   participantNodeSet <- getNodeSet(doc=subDoc,
                                    path="/ns:interaction/ns:participantList/ns:participant",
                                    namespaces=namespaces)
