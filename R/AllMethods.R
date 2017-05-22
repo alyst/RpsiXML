@@ -174,12 +174,10 @@ setMethod("show", "psimi25Interaction", function(object) {
       "[ interaction type ]:", object@interactionType, "\n",
       "[ interaction detection method ]:", object@interactionDetectionMethod, "\n",
       "[ experiment ]: pubmed", object@expPubMed, "\n",
-      "[ participant ]:", object@participant, "\n",
-      "[ bait ]:", object@bait, "\n",
-      "[ bait UniProt ]:", object@baitUniProt, "\n",
-      "[ prey ]:", object@prey, "\n",
-      "[ prey UniProt ]:", object@preyUniProt, "\n",
-      "[ confidence value ]:", confidenceValue(object), "\n",
+      "[ participants ]: there are", nrow(object@participants),
+      "participants in total, here are the first few ones:\n")
+  print(utils::head(participants(object)))
+  cat("[ confidence value ]:", confidenceValue(object), "\n",
       "[ negative ]:", isNegative(object), "\n",
       "[ modeled ]:", isModeled(object), "\n",
       "[ intraMolecular ]:", isIntraMolecular(object), "\n"
@@ -380,20 +378,14 @@ setMethod("interactorInfo", signature(x="psimi25ComplexEntry"),
 setMethod("interactorInfo", signature(x="list"),
           function(x) {
             stopifnot(all(sapply(x, is, "psimi25Interactor")))
-            interactorFeatures <- c("sourceDb","sourceId","shortLabel",
-                                    "uniprotId",  "organismName", "taxId")
-            interactorInfo <- matrix(character(0), length(x), 
-                                     length(interactorFeatures))
-            colnames(interactorInfo) <- interactorFeatures
-            if(length(x) > 0) {
-              for (p in seq(x)) {
-                for (q in interactorFeatures) {
-                  interactorInfo[p,q] <- slot(x[[p]], q)
-                }
-              }
-            }
-            rownames(interactorInfo) <- interactorInfo[,"uniprotId"]
-            interactorInfo
+            features <- c("localId", "sourceDb", "sourceId", "shortLabel",
+                          "uniprotId",  "organismName", "taxId")
+            res_list <- lapply(features, function(feat){
+              sapply(x, function(xx) null2na(slot(xx, feat)))
+            })
+            names(res_list) <- features
+            as.data.frame(res_list, stringsAsFactors = FALSE,
+                          row.names = names(x))
           })
 
 setMethod("interactions", signature(x="psimi25InteractionEntry"),
@@ -441,26 +433,13 @@ setMethod("accession", "psimi25Interactor", function(x) {
 
 ## interaction accessors
 setMethod("bait", "psimi25Interaction", function(x) {
-  return(x@baitUniProt)
-})
-setMethod("baitAccession", "psimi25Interaction", function(x) {
-  return(x@bait)
+  return(subset(x@participants, role=="bait")$uniprotId)
 })
 setMethod("prey", "psimi25Interaction", function(x)  {
-  return(x@preyUniProt)
+  return(subset(x@participants, role=="prey")$uniprotId)
 })
-setMethod("preyAccession", "psimi25Interaction", function(x) {
-  return(x@prey)
-})
-setMethod("participant", "psimi25Interaction", function(x) {
-  return(x@participant)
-})
-
-setMethod("inhibitor", "psimi25Interaction", function(x) {
-  return(x@inhibitor)
-})
-setMethod("neutralComponent", "psimi25Interaction", function(x) {
-  return(x@neutralComponent)
+setMethod("participants", "psimi25Interaction", function(x) {
+  return(x@participants)
 })
 setMethod("pubmedID", "psimi25Interaction", function(x) {
   return(x@expPubMed)

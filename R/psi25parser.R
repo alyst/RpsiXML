@@ -73,8 +73,7 @@ parseXmlExperimentNodeSet <- function(nodes, psimi25source, namespaces, verbose)
 ##----------------------------------------##
 parseXmlInteractorNode <- function(root, namespaces, sourceDb, uniprotsymbol) {
   subDoc <- xmlDoc(root)
-  sourceIds <- XMLattributeValueByPath(doc = subDoc, path = "/ns:interactor", 
-                                              name = "id", namespaces = namespaces)
+  localId <- xmlGetAttr(root, "id", NA_character_)
   shortLabels <- nonNullXMLvalueByPath(doc = subDoc,
                                        path="/ns:interactor/ns:names/ns:shortLabel",
                                        namespaces = namespaces)
@@ -116,8 +115,9 @@ parseXmlInteractorNode <- function(root, namespaces, sourceDb, uniprotsymbol) {
 
   free(subDoc)
   interactor <- new("psimi25Interactor",
+                    localId = localId,
                     sourceDb = sourceDb,
-                    sourceId = sourceIds,
+                    sourceId = sourceRef$id,
                     shortLabel = shortLabels,
                     uniprotId = uniprotRef$id,
                     organismName = organismNames,
@@ -212,51 +212,30 @@ parseXmlInteractionNode <- function(node,
   isIntraMolecular <- !is.null(isIntraMolecular) && length(isIntraMolecular) == 1 && switch(isIntraMolecular, true = TRUE, false = FALSE, stop("Unknown <intraMolecular> value: ", isIntraMolecular))
 
   ## participant
-  rolePath <- "/ns:interaction/ns:participantList/ns:participant/ns:interactorRef"
-  participantRefs <- nonNullXMLvalueByPath(doc=subDoc, path=rolePath, namespaces=namespaces)
-  if(isEmptyNodeSet(participantRefs)) {
-    rolePath <- "/ns:interaction/ns:participantList/ns:participant/ns:interactor"
-    participantRefs <- nonNullXMLattributeValueByPath(doc=subDoc,
-                                                      path=rolePath,
-                                                      name="id", namespaces=namespaces)
-  }
-  
-  ## bait
-  rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='bait']/ns:interactorRef"
-  baitRefs <- nonNullXMLvalueByPath(doc=subDoc, path = rolePath, namespaces=namespaces)
-  if(isEmptyNodeSet(baitRefs)) {
-    rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='bait']/ns:interactor"
-    baitRefs <- nonNullXMLattributeValueByPath(doc=subDoc,
-                                               path=rolePath,
-                                               name="id", namespaces=namespaces)
-  }
-  
-  ##prey
-  rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='prey']/ns:interactorRef"
-  preyRefs <- nonNullXMLvalueByPath(doc=subDoc, path = rolePath, namespaces=namespaces)
-  if(isEmptyNodeSet(preyRefs)) {
-    rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='prey']/ns:interactor"
-    preyRefs <- nonNullXMLattributeValueByPath(doc=subDoc,
-                                               path=rolePath,
-                                               name="id", namespaces=namespaces)
-  }
-  
-  ## inhibitor
-  rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='inhibitor']/ns:interactorRef"
-  inhibitorRefs <- nonNullXMLvalueByPath(doc=subDoc, path=rolePath, namespaces=namespaces)
-  
-  ## neutral component
-  rolePath <- "/ns:interaction/ns:participantList/ns:participant[ns:experimentalRoleList/ns:experimentalRole/ns:names/ns:fullName='neutral component']/ns:interactorRef"
-  neutralComponentRefs <- nonNullXMLvalueByPath(doc=subDoc, path = rolePath, namespaces=namespaces)
+  participantsInfo <- do.call(rbind,
+    xpathApply(doc=subDoc, "/ns:interaction/ns:participantList/ns:participant", namespaces = namespaces,
+               function(pNode){
+      refNodes <- xmlElementsByTagName(pNode, name="interactorRef")
+      if (length(refNodes) == 0L) refNodes <- xmlElementsByTagName(pNode, name="interactor")
+      iactorRef <- if (length(refNodes) > 0L) xmlValue(refNodes[[1L]]) else NA_character_
+      expRoleListNodes <- xmlElementsByTagName(pNode, name="experimentalRoleList")
+      expRoles <- NA_character_
+      if (length(expRoleListNodes) > 0L) {
+        expRoleNameNodes <- xmlElementsByTagName(expRoleListNodes[[1]], name="fullName", recursive = TRUE)
+        if (length(expRoleNameNodes) > 0L) {
+          expRoles <- sapply(expRoleNameNodes, xmlValue)
+        }
+      }
+      return(data.frame(interactorRef=iactorRef,
+                        role=expRoles,
+                        stringsAsFactors = FALSE))
+  }))
   free(subDoc)
-  
-  srcLabel <- "sourceId"; uniLabel <- "uniprotId"
-  participantUniprot <- getValueByMatchingMatrixColumn(participantRefs, interactorInfo, srcLabel, uniLabel)
-  preyUniprot <- getValueByMatchingMatrixColumn(preyRefs, interactorInfo, srcLabel, uniLabel)
-  baitUniprot <- getValueByMatchingMatrixColumn(baitRefs, interactorInfo, srcLabel, uniLabel)
-  inhibitorUniprot <- getValueByMatchingMatrixColumn(inhibitorRefs,  interactorInfo, srcLabel, uniLabel)
-  neutralComponentUniprot <- getValueByMatchingMatrixColumn(neutralComponentRefs,  interactorInfo, srcLabel, uniLabel)
-  
+
+  participantsInfo <- merge(participantsInfo, interactorInfo,
+                            by.x="interactorRef", by.y="localId",
+                            all.x=TRUE, all.y=FALSE)
+
   interaction <- new("psimi25Interaction",
                      sourceDb = sourceDb,
                      sourceId = as.character(psimi25Id), ## FIXME: can we do it nullable?
@@ -265,13 +244,7 @@ parseXmlInteractionNode <- function(node,
                      expPubMed = expPubMed,
                      ##expSourceId = expPsimi25, 
                      confidenceValue = confidenceValue,
-                     participant = participantUniprot,
-                     bait = baitRefs,
-                     baitUniProt = baitUniprot, 
-                     prey = preyRefs,
-                     preyUniProt = preyUniprot,
-                     inhibitor = inhibitorUniprot, 
-                     neutralComponent = neutralComponentUniprot,
+                     participants = participantsInfo,
                      isNegative = isNegative,
                      isModeled = isModeled,
                      isIntraMolecular = isIntraMolecular
@@ -406,33 +379,9 @@ parseReleaseDate <- function(doc, basePath, namespaces) {
                                                 namespaces = namespaces)
   return(releaseDate)
 }
-getPrimaryInteractorPath <- function(basePath) {
-  interactorPath <- paste(basePath, "/ns:interactorList/ns:interactor", 
-                          sep = "", collapse = "")
-  return(interactorPath)
-}
-
-
-getSecondaryInteractorPath <- function(basePath) {
-  interactorPath <-  paste(basePath, "/ns:interactionList/ns:interaction/ns:participantList/ns:participant/ns:interactor",
-                           sep="", collapse="")
-  return(interactorPath)
-}
-
-getInteractorNodeSet <- function(doc, basePath, namespaces) {
-  interactorPath <- getPrimaryInteractorPath(basePath)
-  interactorNodes <- getNodeSet(doc, interactorPath, namespaces)
-  if(length(interactorNodes) == 0) { ## in case no interactorList was provided
-    interactorPath <- getSecondaryInteractorPath(basePath)
-    interactorNodes <- getNodeSet(doc, interactorPath, 
-                                  namespaces)
-  }
-  return(interactorNodes)
-}
 
 parseXmlInteractorNodeSet <- function(nodes, psimi25source,
                                       namespaces, verbose) {
-  interactorIds <- sapply(nodes, xmlGetAttr, name = "id")
   interactorCount <- length(nodes)
   if (verbose) {statusDisplay(paste(interactorCount, "interactor(s) found\n"))}
   if (verbose) {statusDisplay("  Parsing interactors:\n")}
@@ -452,8 +401,7 @@ parseXmlInteractorNodeSet <- function(nodes, psimi25source,
   if(verbose)
     statusDisplay("\n")
   
-  interactorInfMat <- interactorInfo(interactors)
-  names(interactors) <- interactorInfMat[,"uniprotId"]
+  names(interactors) <- sapply(nodes, xmlGetAttr, name = "id")
   return(interactors)
 }
 
@@ -463,9 +411,8 @@ parseXmlEntryInteractors <- function(doc,
                                      psimi25source,
                                      namespaces,
                                      verbose=TRUE) {
-  interactorNodes <- getInteractorNodeSet(doc=doc,
-                                          basePath=basePath,
-                                          namespaces=namespaces)
+  interactorNodes <- getNodeSet(doc,
+      paste0(basePath, "/ns:interactorList/ns:interactor"), namespaces)
   interactors <- parseXmlInteractorNodeSet(nodes=interactorNodes,
                                            psimi25source=psimi25source,
                                            namespaces=namespaces,
@@ -496,13 +443,10 @@ parseXmlEntryNode <- function(doc, index, namespaces, psimi25source, verbose=TRU
                                           psimi25source=psimi25source,
                                           namespaces=namespaces,
                                           verbose=verbose)
-  interactorInfMat <- interactorInfo(interactors)
+  interactorsInfo <- interactorInfo(interactors)
 
-  
-  organismName <- unique(unlist(interactorInfMat[, "organismName"]))
-  organismName(thisEntry) <- organismName
-  taxId <- unique(unlist(interactorInfMat[, "taxId"]))
-  taxId(thisEntry) <- taxId
+  organismName(thisEntry) <- unique(interactorsInfo$organismName)
+  taxId(thisEntry) <- unique(interactorsInfo$taxId)
 
   ## interaction
   interactionNodes <- getInteractionNodeSet(doc=doc,
@@ -513,12 +457,11 @@ parseXmlEntryNode <- function(doc, index, namespaces, psimi25source, verbose=TRU
   interactions <- parseXmlInteractionNodeSet(nodes=interactionNodes,
                                              psimi25source = psimi25source,
                                              expEnv = experimentEnv,
-                                             interactorInfo = interactorInfMat,
+                                             interactorInfo = interactorsInfo,
                                              namespaces=namespaces,
                                              verbose=verbose)
   
   interactions(thisEntry) <- interactions
-  rownames(interactorInfMat) <- interactorInfMat[, "uniprotId"]
   interactors(thisEntry) <- interactors
 
   return(thisEntry)
@@ -592,7 +535,6 @@ parsePsimi25Complex <- function(psimi25file, psimi25source, verbose=FALSE) {
                                           namespaces=namespaces,
                                           verbose=verbose)
   interactors <- interactors[ !duplicated(sapply(interactors, sourceId)) ] # remove the duplicates
-
 
   ## complex
   complexNodes <- getNodeSet(psiDoc, "//ns:interactionList/ns:interaction", namespaces)
@@ -693,7 +635,7 @@ complexEntry2graph <- function(complexEntry) {
   }
   listOfListOfComps <- lapply(complexEntry, function(x){
     lapply(x@complexes, function(y){
-      p <- as.vector(rep(y@members[,2], y@members[,3]))
+      p <- y@participants$uniprotId
       
       attr(p, "complexName") <- y@fullName 
       p
