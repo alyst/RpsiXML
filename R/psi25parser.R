@@ -57,19 +57,14 @@ getXmlExperimentNodeSet <- function(doc, basePath, namespaces) {
   experimentNodes <- getNodeSet(doc, experimentPath, namespaces)
 }
 parseXmlExperimentNodeSet <- function(nodes, psimi25source, namespaces, verbose) {
-  if(verbose)
-    statusDisplay("  Parsing experiments: ")
+  if (verbose) {statusDisplay("  Parsing experiments:\n")}
   experimentEnv <- new.env(parent=emptyenv(), hash=TRUE)
-  for (exp_node in nodes) {
-    exper <- parseXmlExperimentNode(exp_node, namespaces=namespaces, sourceDb=sourceDb(psimi25source))
-    assign(xmlGetAttr(exp_node, name="id"), exper, envir = experimentEnv)
-    if(verbose) {
-      statusDisplay(".")
-    }
-    invisible()
+  for (exp_ix in seq_along(nodes)) {
+    if (verbose) {statusIndicator(exp_ix, length(nodes))}
+    exper <- parseXmlExperimentNode(nodes[[exp_ix]], namespaces=namespaces, sourceDb=sourceDb(psimi25source))
+    assign(xmlGetAttr(nodes[[exp_ix]], name="id"), exper, envir = experimentEnv)
   }
-  if(verbose)
-    statusDisplay("\n")
+  if (verbose) statusDisplay("\n")
   return(experimentEnv)
 }
 
@@ -281,8 +276,6 @@ parseXmlInteractionNode <- function(node,
                      isModeled = isModeled,
                      isIntraMolecular = isIntraMolecular
                      )
-  if(verbose)
-    statusDisplay(".")    
   return(interaction)
   
 }
@@ -293,21 +286,20 @@ parseXmlInteractionNodeSet <- function(nodes,
                                        interactorInfo,
                                        namespaces,
                                        verbose) {
-  
-  if (verbose)
-    statusDisplay("  Parsing interactions:\n")
 
-  interactions <- lapply(nodes, parseXmlInteractionNode,
+  if (verbose) {statusDisplay("  Parsing interactions:\n")}
+
+  interactions <- lapply(seq_along(nodes), function(node_ix) {
+    if (verbose) {statusIndicator(node_ix, length(nodes))}
+    parseXmlInteractionNode(nodes[[node_ix]],
                          psimi25source=psimi25source,
                          expEnv=expEnv,
                          interactorInfo=interactorInfo,
                          namespaces=namespaces,
                          verbose=verbose)
-  
-  if(verbose) {
-    statusDisplay("\n")
-  }
-  
+  })
+  if (verbose) {statusDisplay("\n")}
+
   return(interactions)
 }
 
@@ -440,11 +432,11 @@ getInteractorNodeSet <- function(doc, basePath, namespaces) {
 
 parseXmlInteractorNodeSet <- function(nodes, psimi25source,
                                       namespaces, verbose) {
-  if(verbose)
-    statusDisplay("  Parsing interactors:\n")
-
   interactorIds <- sapply(nodes, xmlGetAttr, name = "id")
   interactorCount <- length(nodes)
+  if (verbose) {statusDisplay(paste(interactorCount, "interactor(s) found\n"))}
+  if (verbose) {statusDisplay("  Parsing interactors:\n")}
+
   interactors <- vector("list",length=interactorCount)
   if (interactorCount > 0) {
     for (p in seq(interactorCount)) {
@@ -482,8 +474,7 @@ parseXmlEntryInteractors <- function(doc,
 }
 
 parseXmlEntryNode <- function(doc, index, namespaces, psimi25source, verbose=TRUE) {
-  if(verbose)
-    statusDisplay(paste("Parsing entry",index,"\n",sep=" "))
+  if(verbose) {statusDisplay(paste0("Parsing entry #",index,"\n"))}
 
   basePath <- getEntryBasePath(index)
   thisEntry <- new("psimi25InteractionEntry")
@@ -517,6 +508,7 @@ parseXmlEntryNode <- function(doc, index, namespaces, psimi25source, verbose=TRU
   interactionNodes <- getInteractionNodeSet(doc=doc,
                                             basePath=basePath,
                                             namespaces=namespaces)
+  if (verbose) {statusDisplay(paste0(length(interactionNodes), " interaction(s) found\n"))}
   sourcedb <- sourceDb(psimi25source)
   interactions <- parseXmlInteractionNodeSet(nodes=interactionNodes,
                                              psimi25source = psimi25source,
@@ -541,9 +533,8 @@ parseXmlEntryNodeSet <- function(psimi25file, psimi25source, verbose=TRUE) {
   namespaces <- c(ns = psimi25NS)
   entry <- getNodeSet(psimi25Doc, "/ns:entrySet/ns:entry", namespaces)
 
-  if(verbose)
-    statusDisplay(paste(length(entry),"Entries found\n",sep=" "))
-  
+  if (verbose) {statusDisplay(paste0(length(entry)," entries found\n"))}
+
   entryList <- lapply(seq_along(entry), function(i) {
     parseXmlEntryNode(doc=psimi25Doc, index=i,
                       namespaces=namespaces,
@@ -585,8 +576,7 @@ parsePsimi25Complex <- function(psimi25file, psimi25source, verbose=FALSE) {
   namespaces <- c(ns=psiNS[[1]]$uri)
 
   entry <- getNodeSet(psiDoc, "/ns:entrySet/ns:entry", namespaces)
-  if(verbose)
-    statusDisplay(paste(length(entry),"Entries found\n",sep=" "))
+  if (verbose) {statusDisplay(paste0(length(entry)," entries found\n"))}
   if (length(entry) != 1L)
     stop("Internal RpsiXML Error: parsePsimi25Complex() does not support ", length(entry), " entries")
 
@@ -606,12 +596,17 @@ parsePsimi25Complex <- function(psimi25file, psimi25source, verbose=FALSE) {
 
   ## complex
   complexNodes <- getNodeSet(psiDoc, "//ns:interactionList/ns:interaction", namespaces)
-  if (verbose)
-    statusDisplay("  Parsing complexes:\n")
-  
-  complexList <- lapply(complexNodes, parseXmlComplexNode,
+  complexCount <- length(complexNodes)
+  if (verbose) {statusDisplay(paste(complexCount, "complex(es) found\n"))}
+
+  if (verbose) {statusDisplay("  Parsing complexes:\n")}
+  complexList <- lapply(seq_along(complexNodes), function(cplxIx) {
+    if (verbose) {statusIndicator(cplxIx, complexCount)}
+    parseXmlComplexNode(complexNodes[[cplxIx]],
                         namespaces=namespaces,
                         psimi25source=psimi25source)
+  })
+  if (verbose) {statusDisplay("\n")}
   annotatedComplexList <- annotateComplexesWithInteractors(complexes=complexList,
                                                            interactors=interactors)
   
