@@ -33,7 +33,9 @@ exportMethods("taxId",
               "organismName",
               "organismName<-")
 
-exportMethods("localId")
+exportMethods("localId",
+              "shortLabel",
+              "shortLabel<-")
 
 exportMethods("interactors",
               "interactions",
