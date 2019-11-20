@@ -204,6 +204,7 @@ setMethod("show", "psimi25InteractionEntry", function(object) {
 setMethod("show","psimi25Complex", function(object) {
   cat(paste("complex (", object@sourceId, ")\n",
             getHorizontalSepLine(),
+            "[ local ID ]: ", object@localId, "\n",
             "[ source database ]: ", object@sourceDb, "\n",
             "[ source ID ]: ", object@sourceId, "\n",
             "[ full name ]: ", object@fullName, "\n",
@@ -412,6 +413,9 @@ setReplaceMethod("participants", c("psimi25Complex","data.frame"), function(x,va
 })
 
 ## TODO: refactor to psimi25Names
+setMethod("localId", "psimi25Complex", function(x) {
+  return(x@localId)
+})
 setMethod("shortLabel", "psimi25Complex", function(x) {
   return(x@shortLabel)
 })

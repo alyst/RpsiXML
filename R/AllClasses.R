@@ -150,7 +150,8 @@ setClass("psimi25ComplexEntry",
          )
 
 setClass("psimi25Complex",
-         representation(shortLabel = "character",
+         representation(localId = "character",
+                        shortLabel = "character",
                         fullName = "character",
                         participants = "data.frame"
                         ),

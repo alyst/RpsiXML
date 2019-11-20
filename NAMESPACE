@@ -33,6 +33,8 @@ exportMethods("taxId",
               "organismName",
               "organismName<-")
 
+exportMethods("localId")
+
 exportMethods("interactors",
               "interactions",
               "numInteractors",

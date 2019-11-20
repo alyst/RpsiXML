@@ -348,6 +348,7 @@ parseXmlComplexNode <- function(node,
 
   free(subDoc)
   complex <- new("psimi25Complex",
+                 localId=localId,
                  sourceDb=sourcedb,
                  sourceId=sourceId,
                  shortLabel=shortLabel,
