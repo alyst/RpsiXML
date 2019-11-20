@@ -40,7 +40,6 @@ setGeneric("participants<-", function(x,value) standardGeneric("participants<-")
 setGeneric("localId", function(x) standardGeneric("localId"))
 setGeneric("shortLabel", function(x) standardGeneric("shortLabel"))
 setGeneric("shortLabel<-", function(x,value) standardGeneric("shortLabel<-"))
-setGeneric("fullName", function(x) standardGeneric("fullName"))
 
 setGeneric("attributesList", function(x) standardGeneric("attributesList"))
 setGeneric("attributesList<-", function(x,value) standardGeneric("attributesList<-"))
